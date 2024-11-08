@@ -1,22 +1,31 @@
 package com.spring.jpatest.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.spring.jpatest.dto.paramDTO;
+import com.spring.jpatest.entity.springjpaMainEntity;
+import com.spring.jpatest.service.springjpaService;
 
 @Controller
 public class mainController {
-    
-    @RequestMapping(value="/index",  method = RequestMethod.GET)
-    public ModelAndView index (ModelAndView mav){
-        
-        mav.setViewName("content/index");
-        
-        return mav;
+
+    private final springjpaService springjpaservice;
+
+    mainController(springjpaService springjpaservice){
+        this.springjpaservice = springjpaservice;
     }
 
-    
+    @ResponseBody
+    @RequestMapping(value="/get", method=RequestMethod.GET)
+    public List<springjpaMainEntity> requestMethodName(paramDTO paramdto) {
+        
+        return springjpaservice.searchList();
+    }
     
 
 }

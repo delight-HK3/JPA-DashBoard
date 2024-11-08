@@ -13,22 +13,24 @@
     <div class="container">
         <br><br>
         <div class="row">
-            <div class="col-4">
-                <label for="searchName" class="form-label">이름</label>
-                <input class="form-control" type="text" id="searchName" name="searchName" value=""/>
-            </div>
-            <div class="col-4">
-                <label for="searchAge" class="form-label">나이</label>
-                <input class="form-control" type="text" id="searchAge" name="searchAge" value=""/>
-            </div>
-            <div class="col-4">
-                <label for="searchNum" class="form-label">주민번호</label>
-                <input class="form-control" type="text" id="searchNum" name="searchNum" value=""/>
-            </div>
-            
-            <div class="col" style="margin-top: 15px; text-align: right;">
-                <button type="button" class="btn btn-primary">조회</button>
-            </div>
+            <th:form action="/get" method="get">
+                <div class="col-4">
+                    <label for="searchName" class="form-label">이름</label>
+                    <input class="form-control" type="text" id="searchName" name="searchName" value=""/>
+                </div>
+                <div class="col-4">
+                    <label for="searchAge" class="form-label">나이</label>
+                    <input class="form-control" type="number" id="searchAge" name="searchAge" value=""/>
+                </div>
+                <div class="col-4">
+                    <label for="searchNum" class="form-label">고유번호</label>
+                    <input class="form-control" type="text" id="searchNum" name="searchNum" value=""/>
+                </div>
+                
+                <div class="col" style="margin-top: 15px; text-align: right;">
+                    <input class="btn btn-primary" type="submit" value="입력"/>
+                </div>
+            </form>
         </div>
     </div>
 
