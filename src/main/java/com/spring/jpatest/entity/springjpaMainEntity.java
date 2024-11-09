@@ -1,6 +1,5 @@
 package com.spring.jpatest.entity;
 
-
 import org.hibernate.annotations.Comment;
 
 import jakarta.persistence.Column;
@@ -18,6 +17,7 @@ import lombok.AccessLevel;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="t_springdatajpa_main")
 public class springjpaMainEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SEQ")

@@ -9,8 +9,11 @@ import com.spring.jpatest.entity.springjpaMainEntity;
 
 public interface springjpaRepository extends JpaRepository<springjpaMainEntity, Integer>{
 
+    // SQL 방식
     @Query(value = "SELECT * FROM t_springdatajpa_main", nativeQuery = true)
-    List<springjpaMainEntity> searchList();
+    List<springjpaMainEntity> searchListSql();
     
-    
+    // JPQL 방식
+    @Query(value = "SELECT jpa FROM t_springdatajpa_main jpa")
+    List<springjpaMainEntity> searchListJpql();
 }

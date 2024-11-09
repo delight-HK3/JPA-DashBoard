@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.jpatest.dto.paramDTO;
-import com.spring.jpatest.entity.springjpaMainEntity;
+import com.spring.jpatest.dto.resultDTO;
 import com.spring.jpatest.service.springjpaService;
 
 @Controller
@@ -22,7 +22,7 @@ public class mainController {
 
     @ResponseBody
     @RequestMapping(value="/get", method=RequestMethod.GET)
-    public List<springjpaMainEntity> requestMethodName(paramDTO paramdto) {
+    public List<resultDTO> requestMethodName(paramDTO paramdto) {
         
         return springjpaservice.searchList();
     }
