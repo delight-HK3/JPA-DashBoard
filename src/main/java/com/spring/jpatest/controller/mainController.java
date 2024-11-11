@@ -33,4 +33,15 @@ public class mainController {
     }
     
 
+    @ResponseBody
+    @RequestMapping(value="/testone", method=RequestMethod.GET)
+    public void saveOne() {
+        springjpaservice.save();
+    }
+    
+    @ResponseBody
+    @RequestMapping(value="/testall", method=RequestMethod.GET)
+    public void saveAll() {
+        springjpaservice.saveAll();
+    }
 }

@@ -6,16 +6,23 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.spring.jpatest.dto.resultDTO;
+import com.spring.jpatest.entity.Member;
 import com.spring.jpatest.entity.springjpaMainEntity;
+import com.spring.jpatest.repository.memberRepository;
 import com.spring.jpatest.repository.springjpaRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
 public class springjpaService {
     
     private final springjpaRepository springjparepository;
-    
-    springjpaService(springjpaRepository springjparepository){
+    private final memberRepository memberrepository;
+
+    springjpaService(springjpaRepository springjparepository, memberRepository memberrepository){
         this.springjparepository = springjparepository;
+        this.memberrepository = memberrepository;
     }
     
     public springjpaMainEntity searchId(){
@@ -26,13 +33,42 @@ public class springjpaService {
         return springjparepository.findAll();
     }
 
-    public void save(springjpaMainEntity springjpaMainEntity){
-        springjparepository.save(springjpaMainEntity);
+    @Transactional
+    public void save(){
+        long time = System.currentTimeMillis();
+
+        for(int i=1; i<=10; i++){
+            Member member = Member.builder()
+                                .name("tester")
+                                .age(10 + i)
+                                .build();
+            
+            memberrepository.save(member);
+        }
+
+        System.out.println("clear time : "  + (System.currentTimeMillis() - time) + "ms.");
     }
 
-    public void saveAll(List<springjpaMainEntity> springjpaMainEntity){
-        springjparepository.saveAll(springjpaMainEntity);
+    @Transactional
+    public void saveAll(){
+        long time = System.currentTimeMillis();
+
+        List<Member> members = new ArrayList<>();
+        for(int i=1; i<=10; i++){
+            Member member = Member.builder()
+                                .name("tester")
+                                .age(10 + i)
+                                .build();
+            
+            members.add(member);
+        }
+
+        memberrepository.saveAll(members);
+
+        System.out.println("clear time : "  + (System.currentTimeMillis() - time) + "ms.");
     }
+
+
 
     public void delete(springjpaMainEntity springjpaMainEntity){
         springjparepository.delete(springjpaMainEntity);
@@ -47,7 +83,7 @@ public class springjpaService {
     }
 
     public void deleteAllById(List<Integer> id){
-        springjparepository.deleteAllById(id);
+        
     }
 
 
