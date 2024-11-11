@@ -18,6 +18,39 @@ public class springjpaService {
         this.springjparepository = springjparepository;
     }
     
+    public springjpaMainEntity searchId(){
+        return springjparepository.findById(1).get();
+    }
+
+    public List<springjpaMainEntity> searchAll(){
+        return springjparepository.findAll();
+    }
+
+    public void save(springjpaMainEntity springjpaMainEntity){
+        springjparepository.save(springjpaMainEntity);
+    }
+
+    public void saveAll(List<springjpaMainEntity> springjpaMainEntity){
+        springjparepository.saveAll(springjpaMainEntity);
+    }
+
+    public void delete(springjpaMainEntity springjpaMainEntity){
+        springjparepository.delete(springjpaMainEntity);
+    }
+
+    public void deleteAll(){
+        springjparepository.deleteAll();
+    }
+
+    public void deleteById(int id){
+        springjparepository.deleteById(id);
+    }
+
+    public void deleteAllById(List<Integer> id){
+        springjparepository.deleteAllById(id);
+    }
+
+
     public List<resultDTO> searchList(){
         List<resultDTO> dtoList = new ArrayList<>();
         List<springjpaMainEntity> resultList = springjparepository.searchListJpql();

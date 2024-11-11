@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.jpatest.dto.paramDTO;
 import com.spring.jpatest.dto.resultDTO;
+import com.spring.jpatest.entity.springjpaMainEntity;
 import com.spring.jpatest.service.springjpaService;
 
 @Controller
@@ -24,6 +25,10 @@ public class mainController {
     @RequestMapping(value="/get", method=RequestMethod.GET)
     public List<resultDTO> requestMethodName(paramDTO paramdto) {
         
+        springjpaMainEntity test = springjpaservice.searchId();
+
+        System.out.println(test.getAge());
+
         return springjpaservice.searchList();
     }
     

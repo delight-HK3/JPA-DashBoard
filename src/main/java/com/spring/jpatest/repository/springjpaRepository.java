@@ -14,6 +14,6 @@ public interface springjpaRepository extends JpaRepository<springjpaMainEntity, 
     List<springjpaMainEntity> searchListSql();
     
     // JPQL 방식
-    @Query(value = "SELECT jpa FROM t_springdatajpa_main jpa")
+    @Query(value = "SELECT jpa FROM springjpaMainEntity jpa")
     List<springjpaMainEntity> searchListJpql();
 }
