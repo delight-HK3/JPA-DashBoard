@@ -35,18 +35,33 @@ public class springjpaService {
 
     @Transactional
     public void save(){
-        long time = System.currentTimeMillis();
+        //long time = System.currentTimeMillis();
 
-        for(int i=1; i<=10; i++){
+        Member member = new Member("tester00", 10);
+        System.out.println("1========================1");
+        memberrepository.save(member);
+        System.out.println("1========================1");
+
+        member.setName("tester11");
+
+        System.out.println("2========================2");
+        memberrepository.save(member);
+        System.out.println("2========================2");
+
+        member.setName("tester22");
+
+        member.setName("tester44");
+        member.setName("tester333");
+        /*for(int i=1; i<=10; i++){
             Member member = Member.builder()
                                 .name("tester")
                                 .age(10 + i)
                                 .build();
             
-            memberrepository.save(member);
-        }
+            memberrepository.saveAndFlush(member);
+        }*/
 
-        System.out.println("clear time : "  + (System.currentTimeMillis() - time) + "ms.");
+        //System.out.println("clear time : "  + (System.currentTimeMillis() - time) + "ms.");
     }
 
     @Transactional
@@ -63,7 +78,7 @@ public class springjpaService {
             members.add(member);
         }
 
-        memberrepository.saveAll(members);
+        memberrepository.saveAllAndFlush(members);
 
         System.out.println("clear time : "  + (System.currentTimeMillis() - time) + "ms.");
     }
@@ -83,7 +98,7 @@ public class springjpaService {
     }
 
     public void deleteAllById(List<Integer> id){
-        
+        springjparepository.deleteAllById(id);
     }
 
 
