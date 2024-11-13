@@ -3,16 +3,16 @@ package com.spring.jpatest.service;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
 
 import com.spring.jpatest.dto.resultDTO;
 import com.spring.jpatest.entity.Member;
 import com.spring.jpatest.entity.springjpaMainEntity;
 import com.spring.jpatest.repository.memberRepository;
 import com.spring.jpatest.repository.springjpaRepository;
-
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 
 @Service
 public class springjpaService {
@@ -33,7 +33,8 @@ public class springjpaService {
         return springjparepository.findAll();
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
+    //@Transactional
     public void save(){
         //long time = System.currentTimeMillis();
 
