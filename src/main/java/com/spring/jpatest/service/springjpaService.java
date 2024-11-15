@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.spring.jpatest.dto.paramDTO;
 import com.spring.jpatest.dto.resultDTO;
 import com.spring.jpatest.entity.Member;
 import com.spring.jpatest.entity.springjpaMainEntity;
@@ -12,7 +13,6 @@ import com.spring.jpatest.repository.memberRepository;
 import com.spring.jpatest.repository.springjpaRepository;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 
 @Service
 public class springjpaService {
@@ -25,13 +25,17 @@ public class springjpaService {
         this.memberrepository = memberrepository;
     }
     
-    public springjpaMainEntity searchId(){
-        return springjparepository.findById(1).get();
+    public springjpaMainEntity searchId(paramDTO paramdto){
+        return springjparepository.searchListJpqlone(paramdto);
+        //return springjparepository.searchListSqlone(paramdto);
+        //return springjparepository.findById(1).get();
     }
 
     public List<springjpaMainEntity> searchAll(){
         return springjparepository.findAll();
     }
+
+
 
     @Transactional
     public void save(){

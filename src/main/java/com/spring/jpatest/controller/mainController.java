@@ -25,13 +25,23 @@ public class mainController {
     @RequestMapping(value="/get", method=RequestMethod.GET)
     public List<resultDTO> requestMethodName(paramDTO paramdto) {
         
-        springjpaMainEntity test = springjpaservice.searchId();
+        //springjpaMainEntity test = springjpaservice.searchId();
 
-        System.out.println(test.getAge());
+        //System.out.println(test.getAge());
 
         return springjpaservice.searchList();
     }
     
+    @ResponseBody
+    @RequestMapping(value="/getone", method=RequestMethod.GET)
+    public springjpaMainEntity getone() {
+        // 원래 이렇게 하면 안된다.
+        paramDTO paramdto = new paramDTO();
+
+        paramdto.setSearchNum(123523);
+
+        return springjpaservice.searchId(paramdto);
+    }
 
     @ResponseBody
     @RequestMapping(value="/testone", method=RequestMethod.GET)
