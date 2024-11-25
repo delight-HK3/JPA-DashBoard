@@ -12,7 +12,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -37,6 +36,12 @@ public class Member {
 
     @Builder
     public Member(String name, int age){
+        this.name = name;
+        this.age = age;
+    }
+
+    public void updtMember(int seq, String name, int age){
+        this.seq = seq;
         this.name = name;
         this.age = age;
     }

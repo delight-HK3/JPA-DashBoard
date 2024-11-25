@@ -81,7 +81,7 @@ public class springjpaService {
             members.add(member);
         }
 
-        //memberrepository.saveAllAndFlush(members);
+        memberrepository.saveAllAndFlush(members);
 
         System.out.println("clear time : "  + (System.currentTimeMillis() - time) + "ms.");
     }
