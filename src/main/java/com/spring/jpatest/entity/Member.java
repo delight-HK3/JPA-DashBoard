@@ -16,7 +16,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

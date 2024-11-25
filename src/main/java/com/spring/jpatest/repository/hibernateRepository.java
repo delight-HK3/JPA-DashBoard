@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface hibernateRepository{
 
-    
+    public void memeberSearch();
     
 } 
