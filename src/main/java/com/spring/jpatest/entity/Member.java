@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -18,6 +20,11 @@ import lombok.ToString;
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+
+@NamedQuery(name = "findMember", query="select m from Member m")
+@NamedQuery(name = "Member.findMemberBySeq", query="select m from Member m where m.seq = :seq")
+@NamedQuery(name = "Member.findMemberByAge", query="select m from Member m where m.age = :age")
+
 @Table(name="member")
 public class Member {
     @Id

@@ -20,4 +20,20 @@ public class hibernateService {
     public void update(int id){
         hibernaterepository.memberUpdate(id);
     }
+
+    public void getReference(int id){
+        hibernaterepository.memberGetReference(id);
+    }
+
+    public void getCreateJpql(){
+        hibernaterepository.createjpql();
+    }
+
+    public void getCreatenamedsql(){
+        hibernaterepository.createnamedsql();
+    }
+
+    public void getCreatesql(){
+        hibernaterepository.createsql();
+    }
 }

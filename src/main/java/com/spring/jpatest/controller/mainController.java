@@ -70,4 +70,28 @@ public class mainController {
     public void hibernateUpdt(@RequestParam("id") int id) {
         hibernateservice.update(id);
     }
+
+    @ResponseBody
+    @RequestMapping(value="/hiberreference", method=RequestMethod.GET)
+    public void hibernateGetReference(@RequestParam("id") int id) {
+        hibernateservice.getReference(id);
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/hibernatecreateSql", method=RequestMethod.GET)
+    public void hibernateCreateSql() {
+        hibernateservice.getCreateJpql();
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/hibernatecreatename", method=RequestMethod.GET)
+    public void hibernatecreatename() {
+        hibernateservice.getCreatenamedsql();
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/hibernatesql", method=RequestMethod.GET)
+    public void hibernatesql() {
+        hibernateservice.getCreatesql();
+    }
 }
