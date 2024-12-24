@@ -19,7 +19,7 @@ import lombok.ToString;
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class roomservice {
+public class Roomservice {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,6 @@ public class roomservice {
 
     @Comment(value = "멤버번호")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberid")
+    @JoinColumn(name = "member_id")
     private Member member;
 }
