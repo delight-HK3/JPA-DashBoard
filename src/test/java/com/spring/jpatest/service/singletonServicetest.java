@@ -15,6 +15,6 @@ public class singletonServicetest {
 
     // 임의로 호출 잘 되는지 확인용 함수
     public void call() {
-        System.out.println("실행 성공!");
+        System.out.println("성공!");
     }
 }
