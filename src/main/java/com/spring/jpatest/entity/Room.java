@@ -26,7 +26,7 @@ public class Room {
     @Column(name = "seq")
     @Comment(value = "일련번호")
     private int seq;                    
-
+    
     @Column(name = "room_name")
     @Comment(value = "이름")
     private String roomname;
