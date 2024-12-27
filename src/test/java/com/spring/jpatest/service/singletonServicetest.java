@@ -4,7 +4,7 @@ public class singletonServicetest {
     //1. static 영역에 객체를 딱 1개만 생성해둔다.
     private static final singletonServicetest test = new singletonServicetest();
     
-    //2. public으로 열어서 객체 인스턴스가 필요하면 이 static 메서드를 통해서만 조회하도록허용한다.
+    //2. public으로 열어서 객체 인스턴스가 필요하면 이 static 메서드를 통해서만 조회하도록 허용한다.
     public static singletonServicetest getInstance() {
         return test;
     }
