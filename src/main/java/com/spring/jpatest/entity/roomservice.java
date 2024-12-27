@@ -19,7 +19,7 @@ import lombok.ToString;
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Roomservice {
+public class roomservice {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
