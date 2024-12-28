@@ -16,8 +16,8 @@ public class JpatestApplicationTests {
 	@DisplayName("스프링 없는 순수한 DI 컨테이너")
 	public void singletonContainer(){
 
+		// 싱글톤 테스트
 		singletonServicetest singletonServicetest_1 = singletonServicetest.getInstance();
-
 		singletonServicetest singletonServicetest_2 = singletonServicetest.getInstance();
 
 		System.out.println("singletonServicetest_1 = " + singletonServicetest_1);
