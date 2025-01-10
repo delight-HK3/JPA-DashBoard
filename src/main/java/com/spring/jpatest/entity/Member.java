@@ -31,7 +31,7 @@ public class Member {
     @Comment(value = "일련번호")
     private int seq;                    
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", length = 50)
     @Comment(value = "이름")
     private String name;
 
@@ -39,7 +39,6 @@ public class Member {
     @Comment(value = "나이")
     private int age;
 
-    @Builder
     public Member(String name, int age){
         this.name = name;
         this.age = age;
