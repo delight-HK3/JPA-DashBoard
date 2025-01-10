@@ -38,4 +38,8 @@ public class querydslService {
     public long delete(){
         return querydslrepository.delete();
     }
+
+    public void insertRoom(){
+        querydslrepository.insertRoom();
+    }
 }
