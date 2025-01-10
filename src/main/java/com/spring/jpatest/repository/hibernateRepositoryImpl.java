@@ -22,10 +22,7 @@ public class hibernateRepositoryImpl implements hibernateRepository{
     @Transactional
     public void memberSave() {
         
-        Member member = Member.builder()
-                                .name("tester")
-                                .age(10)
-                                .build();
+        Member member = new Member("tester",10);
 
         em.persist(member);
     }
