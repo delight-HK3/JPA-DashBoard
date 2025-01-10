@@ -4,15 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.spring.jpatest.dto.memresultDTO;
-import com.spring.jpatest.dto.resultDTO;
+
 import com.spring.jpatest.entity.Member;
+import com.spring.jpatest.entity.Room;
+import com.spring.jpatest.entity.Roomservice;
+
+import jakarta.persistence.EntityManager;
 
 import static com.spring.jpatest.entity.QMember.member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -21,6 +25,9 @@ public class querydslRepositoryImpl implements querydslRepository{
     @Autowired
     private JPAQueryFactory queryFactory;
     
+    @Autowired
+    private EntityManager em;
+
     @Override
     @Transactional
     public List<memresultDTO> searchAll() {
@@ -68,6 +75,28 @@ public class querydslRepositoryImpl implements querydslRepository{
                             .execute();
     }
 
+    @Override
+    @Transactional
+    public void insertRoom() {
+        List<Member> memberList = new ArrayList<>();
+
+        for(int i = 0; i < 3; i++){ // 고객등록
+            String people = "people_"+i;
+            Member member = new Member(people,20);
+
+            memberList.add(member);
+            em.persist(member);
+        }
+
+        Room room = new Room("normalRoom",memberList);
+        em.persist(room);
+
+        Roomservice rooomservice = new Roomservice("toast", "coffee",  room, memberList.get(0)); 
+                                            
+        em.persist(rooomservice);
+    }
+
+    
     
     
     

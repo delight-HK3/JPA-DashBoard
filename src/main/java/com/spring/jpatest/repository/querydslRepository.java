@@ -19,4 +19,6 @@ public interface querydslRepository {
     public long update();
 
     public long delete();
+
+    public void insertRoom();
 } 
