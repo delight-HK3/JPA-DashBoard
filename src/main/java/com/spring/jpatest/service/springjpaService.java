@@ -72,14 +72,6 @@ public class springjpaService {
         long time = System.currentTimeMillis();
 
         List<Member> members = new ArrayList<>();
-        for(int i=1; i<=10; i++){
-            Member member = Member.builder()
-                                .name("tester")
-                                .age(10 + i)
-                                .build();
-            
-            members.add(member);
-        }
 
         memberrepository.saveAllAndFlush(members);
 
