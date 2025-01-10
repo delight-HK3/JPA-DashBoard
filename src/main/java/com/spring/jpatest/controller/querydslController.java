@@ -50,4 +50,11 @@ public class querydslController {
         long del = querydslservice.delete();
         System.out.println(del); // 삭제한 Row개수 출력
     }
+
+    @RequestMapping(value="/dsl/addd", method=RequestMethod.GET)
+    public void dsladdd() {
+
+        querydslservice.insertRoom();
+        
+    }
 }
