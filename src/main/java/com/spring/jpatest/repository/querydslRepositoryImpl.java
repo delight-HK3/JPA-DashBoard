@@ -78,21 +78,23 @@ public class querydslRepositoryImpl implements querydslRepository{
     @Override
     @Transactional
     public void insertRoom() {
+        // Room에 등록할 용도로 Member Type의 ArrayList생성
         List<Member> memberList = new ArrayList<>();
 
         for(int i = 0; i < 3; i++){ // 고객등록
             String people = "people_"+i;
-            Member member = new Member(people,20);
+            Member member = new Member(people,20); // Member Entity객체 생성 
+            memberList.add(member); // 리스트에 Member객체 추가
 
-            memberList.add(member);
-            em.persist(member);
+            em.persist(member); // Member 테이블에 insert 쿼리추가
         }
 
-        Room room = new Room("normalRoom",memberList);
+        // Room 테이블에 normalRoom 등록쿼리 및 member 테이블에 등록된 사용자의 Room_seq 수정 쿼리추가 
+        Room room = new Room("normalRoom",memberList); 
         em.persist(room);
 
-        Roomservice rooomservice = new Roomservice("toast", "coffee",  room, memberList.get(0)); 
-                                            
+        // 등록된 Room, 등록된 Member, 음식, 드링크 추가하는 쿼리추가
+        Roomservice rooomservice = new Roomservice("toast", "coffee",  room, memberList.get(0));                                     
         em.persist(rooomservice);
     }
 
