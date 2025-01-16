@@ -1,86 +1,53 @@
 package com.spring.jpatest;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
-import com.spring.jpatest.entity.springjpaMainEntity;
-import com.spring.jpatest.repository.querydslRepository;
-import com.spring.jpatest.repository.querydslRepositoryImpl;
-import com.spring.jpatest.repository.springjpaRepository;
-import com.spring.jpatest.service.singletonServicetest;
-
-import jakarta.persistence.EntityManager;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import com.spring.jpatest.config.SecurityConfiguration;
+import com.spring.jpatest.config.querydslConfig;
+import com.spring.jpatest.domain.User;
+import com.spring.jpatest.dto.userDTOTest;
+import com.spring.jpatest.repository.userRepository;
 
 @SpringBootTest
+@DataJpaTest
+@Import(querydslConfig.class)
 public class JpatestApplicationTests {
-
-	private final querydslRepository querydslrepository;
-	private final springjpaRepository springjpaRepository;
-
+	
 	@Autowired
-	public JpatestApplicationTests(querydslRepository querydslrepository , springjpaRepository springjpaRepository){
-		this.querydslrepository = querydslrepository;
-		this.springjpaRepository = springjpaRepository;
-	}
+	private userRepository userRepository;
 
 	@Test
-	@DisplayName("스프링 없는 순수한 DI 컨테이너")
-	public void singletonContainer(){
+	@DisplayName("유저정보가 정상일 경우 등록 테스트")
+	public void userOk(){
 
-		// 싱글톤 테스트
-		singletonServicetest singletonServicetest_1 = singletonServicetest.getInstance();
-		singletonServicetest singletonServicetest_2 = singletonServicetest.getInstance();
+		//System.out.println("test");
 
-		System.out.println("singletonServicetest_1 = " + singletonServicetest_1);
-        System.out.println("singletonServicetest_2 = " + singletonServicetest_2);
-		assertThat(singletonServicetest_1).isSameAs(singletonServicetest_2);
-		singletonServicetest_1.call();
-        singletonServicetest_2.call();
-	}
+		userDTOTest userdto = new userDTOTest("test1","admin","tester1");
 
-	@Test
-	@DisplayName("호텔로직이 성공적으로 입력되면 성공")
-	public void entityManagerAdd(){
-		//querydslrepository.insertRoom();
-	}
-
-	@Test
-	@DisplayName("JPA 1차 캐시 테스트")
-	@Transactional
-	public void oneCache(){
-
-		System.out.println("1차 캐시에 존재하지 않을경우");
-		springjpaRepository.findById(1).get();
-		System.out.println("1차 캐시에 존재 할 경우");
-        springjpaRepository.findById(1).get();
+		User user = User.builder()
+                        .nickName(userdto.getNickName())
+                        .userId(userdto.getUserId())
+                        .password(userdto.getPassword())
+                        .build();
+        
+        //userRepository.save(user);
 
 	}
 
 
 	@Test
-	@DisplayName("JPA 2차 캐시 테스트")
-	public void twoCache(){
+	@DisplayName("유저정보가 없는 경우 등록 테스트")
+	public void userfalse(){
+		
+		// 데이터가 없는 경우에는 java.lang.IllegalStateException 발생
+		//userDTOTest userdto = new userDTOTest("","","");
 
-		springjpaMainEntity entity = springjpaRepository.save(new springjpaMainEntity("test", 30, 3456283));
-
-		springjpaRepository.findById(entity.getSeq()).get();
-        springjpaRepository.findById(entity.getSeq()).get();
-
-		springjpaRepository.findById(1).get();
-
-		twoCacheSub(entity);
 	}
 
-	private void twoCacheSub(springjpaMainEntity entity){
-		springjpaRepository.findById(entity.getSeq()).get();
-
-		springjpaRepository.findById(1).get();
-	}
 }
