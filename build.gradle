@@ -40,12 +40,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-
-	// jpa 2차 캐시 사용관련 implement 
-	implementation 'org.springframework.boot:spring-boot-starter-cache'
-	implementation 'org.ehcache:ehcache:3.10.0'
-	implementation 'org.hibernate:hibernate-jcache:6.0.2.Final'
-	implementation 'javax.cache:cache-api:1.1.1'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	implementation "com.querydsl:querydsl-codegen:5.0.0" // QueryDSL 코드 생성
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
@@ -56,7 +52,9 @@ dependencies {
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-validation'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	testCompileOnly 'org.projectlombok:lombok'
