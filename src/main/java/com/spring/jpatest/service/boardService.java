@@ -18,16 +18,27 @@ public class boardService {
         this.boardRepository = boardRepository;
     }
     
+    /**
+     * 게시판 게시글 모두로딩
+     * 
+     * @return resultList
+     */
     public List<boardDTO> getBoardList(){
         List<Board> boardList = boardRepository.findAll();
         List<boardDTO> resultList = new ArrayList<>();
 
-        for(Board list : boardList){
-            
-            
+        for(int i = 0; i < boardList.size(); i++){
+            boardDTO boardto = boardDTO.builder()
+                                .boardTitle(boardList.get(i).getBoardTitle())
+                                .viewCnt(boardList.get(i).getViewCnt())
+                                .likeCnt(boardList.get(i).getLikeCnt())
+                                .instDate(boardList.get(i).getInstDate())
+                                .build();
 
+            resultList.add(boardto);
         }
 
+        return resultList;
     }
 
 }

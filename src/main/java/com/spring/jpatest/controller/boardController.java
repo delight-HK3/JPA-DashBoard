@@ -17,11 +17,14 @@ public class boardController {
     @RequestMapping(value = "/", method=RequestMethod.GET)
     public ModelAndView requestMethodName(ModelAndView mav) {
 
+        
+
+
         mav.setViewName("content/index");
 
         return mav;
     }
 
-    
+
 
 }
