@@ -12,14 +12,15 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Slf4j
-public class mainController {
+public class userController {
 
     private final userService userService;
 
-    public mainController(userService userService){
+    public userController(userService userService){
         this.userService = userService;
     }
 
@@ -29,10 +30,10 @@ public class mainController {
      * @param nickName
      * @return
      */
-    @RequestMapping(value="/inst", method=RequestMethod.POST)
-    public String userInst(@Valid userDTO userdto) {
-
-        return new String();
+    @ResponseBody
+    @RequestMapping(value="/user/inst", method=RequestMethod.POST)
+    public void userInst(@Valid userDTO userdto) {
+        userService.useradd(userdto); // 유저추가
     }
     
 }
