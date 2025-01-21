@@ -11,7 +11,36 @@
 </head>
 <body>
     <div class="container">
-        
+        <br><br><br><br>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userAdd">사용자 추가</button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" style="text-align: center;">No.</th>
+                    <th scope="col" style="text-align: center;">게시글</th>
+                    <th scope="col" style="text-align: center;">조회수</th>
+
+                    <th scope="col" style="text-align: center;">작성자</th>
+                    <th scope="col" style="text-align: center;">좋아요</th>
+                    <th scope="col" style="text-align: center;">작성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="List, ListStat : ${boardList}">
+                    <td th:text="${ListStat.count}" style="text-align: center;"></td>
+                    <td><a style="text-decoration: none;" 
+                        th:href="@{/board/details(boardCd=${List.boardNum})}">[[${List.boardTitle}]]</a></td>
+                    <td th:text="${List.viewCnt}" style="text-align: center;"></td>
+                    <td th:text="${List.nickName}" style="text-align: center;"></td>
+                    <td th:text="${List.likeCnt}" style="text-align: center;"></td>
+                    <td th:text="${List.instDate}" style="text-align: center;"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
     </div>
+
+    <th:block th:replace="~{content/userAddModal :: userInst}"></th:block>
 </body>
 </html>
