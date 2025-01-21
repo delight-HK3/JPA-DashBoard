@@ -1,12 +1,14 @@
 package com.spring.jpatest.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
-import com.spring.jpatest.domain.Board;
+import com.spring.jpatest.dto.boardDTO;
 
 @Repository
-public interface boardRepository extends JpaRepository<Board, Integer>{
+public interface boardRepository{
 
+    public List<boardDTO> getBoardList();
     
 } 
