@@ -24,20 +24,7 @@ public class boardService {
      * @return resultList
      */
     public List<boardDTO> getBoardList(){
-        List<Board> boardList = boardRepository.findAll();
-        List<boardDTO> resultList = new ArrayList<>();
-
-        for(int i = 0; i < boardList.size(); i++){
-            boardDTO boardto = boardDTO.builder()
-                                .boardTitle(boardList.get(i).getBoardTitle())
-                                .viewCnt(boardList.get(i).getViewCnt())
-                                .likeCnt(boardList.get(i).getLikeCnt())
-                                .instDate(boardList.get(i).getInstDate())
-                                .build();
-
-            resultList.add(boardto);
-        }
-
+        List<boardDTO> resultList = boardRepository.getBoardList();
         return resultList;
     }
 
