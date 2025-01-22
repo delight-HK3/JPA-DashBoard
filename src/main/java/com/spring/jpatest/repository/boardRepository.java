@@ -9,6 +9,9 @@ import com.spring.jpatest.dto.boardDTO;
 @Repository
 public interface boardRepository{
 
-    public List<boardDTO> getBoardList();
+    public List<boardDTO> getBoardList(); // 리스트 조회
     
+    public void boardSave(); // 등록및 저장
+
+    public void boardDelete(); // 게시글 삭제
 } 

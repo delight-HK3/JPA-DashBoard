@@ -38,5 +38,23 @@ public class boardRepositoryImpl implements boardRepository{
         
         return result;
     }
+
+    @Override
+    public void boardSave() {
+        // TODO Auto-generated method stub
+
+        // 게시글 1개 조회 
+        // 결과 없으면 저장 / 있으면 수정
+
+        throw new UnsupportedOperationException("Unimplemented method 'boardSave'");
+    }
+
+    @Override
+    public void boardDelete() {
+        
+        // 특정 ID 게시글 삭제
+
+        throw new UnsupportedOperationException("Unimplemented method 'boardDelete'");
+    }
     
 }
