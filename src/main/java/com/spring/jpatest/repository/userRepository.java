@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.spring.jpatest.domain.User;
 
 @Repository
-public interface userRepository extends JpaRepository<User, UUID>{
-
-    
+public interface userRepository extends JpaRepository<User, UUID>{  
     
 }
