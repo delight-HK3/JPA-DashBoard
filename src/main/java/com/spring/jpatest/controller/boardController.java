@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.jpatest.dto.boardDTO;
+import com.spring.jpatest.dto.board.boardDTO;
 import com.spring.jpatest.service.boardService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
