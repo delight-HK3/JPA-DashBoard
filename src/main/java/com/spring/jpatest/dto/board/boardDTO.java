@@ -1,9 +1,12 @@
-package com.spring.jpatest.dto;
+package com.spring.jpatest.dto.board;
 
 import java.time.LocalDate;
 
 import lombok.Getter;
 
+/**
+ * 게시판 조회 용도 DTO
+ */
 @Getter
 public class boardDTO {
     
