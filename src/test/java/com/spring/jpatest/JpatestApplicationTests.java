@@ -1,26 +1,35 @@
 package com.spring.jpatest;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.spring.jpatest.config.SecurityConfiguration;
-import com.spring.jpatest.config.querydslConfig;
-import com.spring.jpatest.domain.User;
-import com.spring.jpatest.dto.userDTOTest;
+import com.spring.jpatest.dto.login.loginDTO;
+import com.spring.jpatest.dto.login.loginResponseDTO;
+import com.spring.jpatest.dto.user.userDTO;
+import com.spring.jpatest.repository.loginRepository;
 import com.spring.jpatest.repository.userRepository;
+import com.spring.jpatest.service.userService;
 
 @SpringBootTest
-@DataJpaTest
-@Import(querydslConfig.class)
 public class JpatestApplicationTests {
 	
+	userService service;
+	userRepository repository;
+
 	@Autowired
-	private userRepository userRepository;
+	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	loginRepository loginRepository;
+
+	@BeforeEach
+    public void beforeEach() {
+        service = new userService(repository, passwordEncoder);
+    }
 
 	@Test
 	@DisplayName("유저정보가 정상일 경우 등록 테스트")
@@ -28,16 +37,15 @@ public class JpatestApplicationTests {
 
 		//System.out.println("test");
 
-		userDTOTest userdto = new userDTOTest("test1","admin","tester1");
+		userDTO userdto = new userDTO();
 
-		User user = User.builder()
-                        .nickName(userdto.getNickName())
-                        .userId(userdto.getUserId())
-                        .password(userdto.getPassword())
-                        .build();
-        
-        //userRepository.save(user);
+		userdto.setNickName("test1");
+		userdto.setPassword("admin");
+		userdto.setUserId("tester1");
 
+        service.useradd(userdto);
+
+		System.out.println("완료");
 	}
 
 
@@ -50,4 +58,21 @@ public class JpatestApplicationTests {
 
 	}
 
+	@Test
+	@DisplayName("유저정보 가져오기")
+	public void getUserInfo(){
+		
+		loginDTO logindto = new loginDTO();
+
+		logindto.setPassword("user1234");
+		logindto.setUserId("user123");
+
+		loginResponseDTO result = loginRepository.getUserInfo(logindto);
+
+		System.out.println(result);
+
+		// 데이터가 없는 경우에는 java.lang.IllegalStateException 발생
+		//userDTOTest userdto = new userDTOTest("","","");
+
+	}
 }
