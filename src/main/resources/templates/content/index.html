@@ -14,14 +14,17 @@
         <br><br><br><br>
 
         <div class="row"> 
-            <!-- session 처리하여 로그인 안한 경우 출력 -->
-            <a href="" type="button" class="btn btn-primary">사용자 추가</a>
-            <a href="" type="button" class="btn btn-primary">로그인</a>
-            <!-- // session 처리하여 로그인 안한 경우 출력 -->
-             
-            <!-- session 처리하여 로그인하면 출력 -->
-            <a href="" type="button" class="btn btn-success">게시글 추가</a>
-            <!-- // session 처리하여 로그인하면 출력 -->
+            
+            <div class="col">
+                <!-- session 처리하여 로그인 안한 경우 출력 -->
+                <a href="/user/add" type="button" class="btn btn-primary">사용자 추가</a>
+                <a href="" type="button" class="btn btn-primary">로그인</a>
+                <!-- // session 처리하여 로그인 안한 경우 출력 -->
+                 
+                <!-- session 처리하여 로그인하면 출력 -->
+                <a href="" type="button" class="btn btn-success">게시글 추가</a>
+                <!-- // session 처리하여 로그인하면 출력 -->
+            </div>
         </div>
         <br>
         <table class="table table-bordered">
@@ -50,7 +53,5 @@
         </table>
         <br>
     </div>
-
-    <th:block th:replace="~{content/userAddModal :: userInst}"></th:block>
 </body>
 </html>
