@@ -15,7 +15,11 @@ public class SecurityConfig {
     
     @Bean
 	public PasswordEncoder getPasswordEncoder() {
-		return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder(); 
+        // 암호화 체계를 BCryptPasswordEncoder방식사용
+        // BCrypt : 레인보우 테이블 공격 방지용으로 만들어진 단방향 암호화 체계
+        // 레인보우 테이블 공격 : 평문 + 암호화 쌍으로 구성된 데이터를 겁나 가진 테이블을
+        // 하나만 걸려라 라는 식으로 공격하는 방식
 	}
 
     @Bean
@@ -29,7 +33,7 @@ public class SecurityConfig {
         http.sessionManagement(session -> session.invalidSessionUrl("/") // 세션없는 경우 이동하는 경로
                                                  .maximumSessions(1) // 여러번 로그인 하는 것을 방지목적으로 세팅
                                                  .maxSessionsPreventsLogin(true)); // 두 번이상 로그인 방지
-
+    
         return http.build();
     }
 
