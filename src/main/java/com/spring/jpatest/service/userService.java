@@ -3,7 +3,7 @@ package com.spring.jpatest.service;
 import org.springframework.stereotype.Service;
 
 import com.spring.jpatest.domain.User;
-import com.spring.jpatest.dto.userDTO;
+import com.spring.jpatest.dto.user.userDTO;
 import com.spring.jpatest.repository.userRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
