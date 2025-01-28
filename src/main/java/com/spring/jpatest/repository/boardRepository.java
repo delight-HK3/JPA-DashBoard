@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.spring.jpatest.dto.boardDTO;
+import com.spring.jpatest.dto.board.boardDTO;
 
 @Repository
 public interface boardRepository{
