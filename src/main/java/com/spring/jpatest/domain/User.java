@@ -4,11 +4,12 @@ import java.util.UUID;
 
 import org.hibernate.annotations.Comment;
 
-import com.spring.jpatest.dto.userDTO;
+import com.spring.jpatest.dto.user.userDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import lombok.AccessLevel;
@@ -22,11 +23,12 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id 
-    @GeneratedValue(generator = "uuid2")
-    @Column(name = "useruuid", columnDefinition = "BINARY(16)",updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "useruuid")
+    //@Column(name = "useruuid", columnDefinition = "BINARY(16)",unique = true, nullable = false)
     @Comment(value = "유저 일련번호")
     private UUID useruuid;
-    
+
     @Column(name = "nickName", length = 50)
     @Comment(value = "닉네임")
     private String nickName;
