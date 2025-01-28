@@ -2,12 +2,12 @@ package com.spring.jpatest.repository;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.spring.jpatest.dto.boardDTO;
+import com.spring.jpatest.dto.board.boardDTO;
+
 import static com.spring.jpatest.domain.QBoard.board;
 import static com.spring.jpatest.domain.QUser.user;
 
@@ -15,7 +15,7 @@ import static com.spring.jpatest.domain.QUser.user;
 @Repository
 public class boardRepositoryImpl implements boardRepository{
     
-    private JPAQueryFactory queryFactory;
+    private final JPAQueryFactory queryFactory;
 
     public boardRepositoryImpl(JPAQueryFactory queryFactory){
         this.queryFactory = queryFactory;
