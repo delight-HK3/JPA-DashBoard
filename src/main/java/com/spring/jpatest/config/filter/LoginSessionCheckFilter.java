@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LoginSessionCheckFilter implements Filter{
-    private final String[] whitelist = {"/", "/user/*", "", "/js/*","/css/*"};
+    private final String[] whitelist = {"/", "/user/*", "/login", "/js/*","/css/*"};
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -32,7 +32,7 @@ public class LoginSessionCheckFilter implements Filter{
  				HttpSession session = httpRequest.getSession(false); // false로 해도 상관 없고 true도 상관이 없다.
                 
                 // 세션이 없거나 세션 속성중 id가 없는 경우
-		 		if (session == null || session.getAttribute("nickname") == null) {
+		 		if (session == null || session.getAttribute("nickName") == null) {
 
                     // 로그인이 필요하다는 alert메세지를 만드는 부분
                     response.setContentType("text/html; charset=utf-8");
@@ -48,7 +48,7 @@ public class LoginSessionCheckFilter implements Filter{
 		 } catch (Exception e) {
  			throw e; //예외 로깅 가능 하지만, 톰캣까지 예외를 보내주어야 함
 		 } finally {
-		 	log.info("인증 체크 필터 종료 {}", requestURI);
+		 	//log.info("인증 체크 필터 종료 {}", requestURI);
 		 }
 
     }
