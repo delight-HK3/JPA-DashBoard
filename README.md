@@ -8,8 +8,22 @@ Database : MariaDB 10.7
 Server : localhost
 Tool : Visual Studio Code
 ```
-### jpatest에서 사용한 JPA 기술들
-- JPQL
-- @Query 어노테이션
+### JPA-DashBoard 에서 사용한 JPA 기술들
+- JPQL (EntityManager)
 - QueryDSL
-- JPARepository
+- Spring Data JPA (JPARepository)
+
+<br>
+
+### 구현된 기능
+- 유저등록
+- 로그인기능
+- 세션 등록 및 구분
+- 게시글 등록
+
+<br>
+
+### 앞으로 구현할 기능
+- 유저등록시 아이디, 닉네임 중복체크
+- 게시글 수정 및 삭제
+
