@@ -8,7 +8,7 @@ import lombok.Getter;
  * 게시판 조회 용도 DTO
  */
 @Getter
-public class boardDTO {
+public class boardListDTO {
     
     private final int boardNum;
     private final String boardTitle;
@@ -17,7 +17,7 @@ public class boardDTO {
     private final LocalDate instDate;
     private final String nickName;
 
-    public boardDTO(int boardNum, String boardTitle, int viewCnt,
+    public boardListDTO(int boardNum, String boardTitle, int viewCnt,
                     int likeCnt, LocalDate instDate, String nickName){
         this.boardNum = boardNum;
         this.boardTitle = boardTitle;
