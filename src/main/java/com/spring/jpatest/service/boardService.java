@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.spring.jpatest.dto.board.boardDTO;
+import com.spring.jpatest.dto.board.boardListDTO;
+import com.spring.jpatest.dto.board.boardSaveDTO;
 import com.spring.jpatest.repository.boardRepository;
 
 @Service
@@ -17,13 +18,21 @@ public class boardService {
     }
     
     /**
-     * 게시판 게시글 모두로딩
+     * 게시판 - 게시글 모두로딩
      * 
      * @return resultList
      */
-    public List<boardDTO> getBoardList(){
-        List<boardDTO> resultList = boardRepository.getBoardList();
+    public List<boardListDTO> getBoardList(){
+        List<boardListDTO> resultList = boardRepository.getBoardList();
         return resultList;
     }
 
+    /**
+     * 게시판 - 게시글 입력
+     * 
+     * @param boardAdddto
+     */
+    public void boardSave(boardSaveDTO boardSavedto){
+        boardRepository.boardSave(boardSavedto);
+    }
 }
