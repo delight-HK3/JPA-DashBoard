@@ -25,7 +25,7 @@ public class userController {
     }
 
     /**
-     * 게시판 - 유저추가 페이지 이동
+     * user - 유저추가 페이지 이동
      * 
      * @param mav
      * @return
@@ -40,7 +40,7 @@ public class userController {
     }
     
     /**
-     * 게시판 - 입력된 정보를 기반으로 유저추가
+     * user - 입력된 정보를 기반으로 유저추가
      * 
      * @param nickName
      * @return
