@@ -60,4 +60,11 @@ public class Board {
     @Comment(value = "작성일")
     private LocalDate instDate;
 
+    @Builder
+    public Board(User user, String boardTitle, String boardSubject, LocalDate instDate){
+        this.user = user;
+        this.boardTitle = boardTitle;
+        this.boardSubject = boardSubject;
+        this.instDate = instDate;
+    }
 }
