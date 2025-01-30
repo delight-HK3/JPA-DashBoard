@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 import com.spring.jpatest.dto.login.loginDTO;
 import com.spring.jpatest.dto.login.loginResponseDTO;
 import com.spring.jpatest.exception.exceptionEnum;
-import com.spring.jpatest.exception.custom.NoInfoException;
-import com.spring.jpatest.exception.custom.NoMatchPassException;
+import com.spring.jpatest.exception.custom.NoMatchInfoException;
 import com.spring.jpatest.repository.loginRepository;
 
 @Service
@@ -26,11 +25,11 @@ public class loginService {
 
         loginResponseDTO result = loginRepository.getUserInfo(logindto);
         // 유저 정보가 존재하지 않는 경우
-        if(result == null){ throw new NoInfoException(exceptionEnum.NO_USER_INFO); }
+        if(result == null){ throw new NoMatchInfoException(exceptionEnum.NOT_MATCH_INFO); }
 
         boolean passcheck = passwordEncoder.matches(logindto.getPassword(), result.getPassword());
         // 비밀번호가 일치하지 않은 경우
-        if(passcheck == false){ throw new NoMatchPassException(exceptionEnum.NOT_MATCH_PASS); }
+        if(passcheck == false){ throw new NoMatchInfoException(exceptionEnum.NOT_MATCH_INFO); }
 
         return result;
     }
