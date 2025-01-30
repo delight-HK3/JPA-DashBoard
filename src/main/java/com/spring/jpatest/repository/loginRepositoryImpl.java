@@ -2,7 +2,6 @@ package com.spring.jpatest.repository;
 
 import static com.spring.jpatest.domain.QUser.user;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Projections;
@@ -10,8 +9,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import com.spring.jpatest.dto.login.loginDTO;
 import com.spring.jpatest.dto.login.loginResponseDTO;
-import com.spring.jpatest.exception.exceptionEnum;
-import com.spring.jpatest.exception.custom.NoInfoException;
 
 @Repository
 public class loginRepositoryImpl implements loginRepository{
@@ -27,7 +24,8 @@ public class loginRepositoryImpl implements loginRepository{
 
         loginResponseDTO result = queryFactory
                                     .select(Projections.constructor(loginResponseDTO.class,
-                                        user.userId
+                                        user.useruuid
+                                        , user.userId
                                         , user.nickName
                                         , user.password
                                     ))
