@@ -1,9 +1,9 @@
 package com.spring.jpatest.controller;
 
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.jpatest.dto.login.loginDTO;
 import com.spring.jpatest.dto.login.loginResponseDTO;
@@ -23,12 +23,11 @@ public class loginController {
     }
 
      /**
-      * 회원로그인 
+      * login - 로그인기능
       *
       * @param logindto
       * @param request
       */
-    @ResponseBody
     @RequestMapping(value="/login", method=RequestMethod.GET)
     public String userlogin(loginDTO logindto, HttpServletRequest request) {
         
@@ -36,6 +35,7 @@ public class loginController {
         loginResponseDTO result = loginService.getUserInfo(logindto);
 
         session.setAttribute("nickName",result.getNickName());
+        session.setAttribute("useruuid",result.getUseruuid());
         
         return "redirect:/";
     }
