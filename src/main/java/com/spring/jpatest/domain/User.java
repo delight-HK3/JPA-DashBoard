@@ -4,8 +4,6 @@ import java.util.UUID;
 
 import org.hibernate.annotations.Comment;
 
-import com.spring.jpatest.dto.user.userDTO;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
