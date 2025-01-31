@@ -67,4 +67,13 @@ public class Board {
         this.boardSubject = boardSubject;
         this.instDate = instDate;
     }
+
+    public void updateBoard(String boardTitle, String boardSubject){
+        this.boardTitle = boardTitle;
+        this.boardSubject = boardSubject;
+    }
+
+    public void setViewCnt(int viewCnt){
+        this.viewCnt = viewCnt;
+    }
 }
