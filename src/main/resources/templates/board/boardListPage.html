@@ -68,7 +68,7 @@
                 <tr th:each="List, ListStat : ${boardList}">
                     <td th:text="${ListStat.count}" style="text-align: center;"></td>
                     <td><a style="text-decoration: none;" 
-                        th:href="@{/board/details(boardCd=${List.boardNum})}">[[${List.boardTitle}]]</a></td>
+                        th:href="@{/board/detail(boardCd=${List.boardNum})}">[[${List.boardTitle}]]</a></td>
                     <td th:text="${List.viewCnt}" style="text-align: center;"></td>
                     <td th:text="${List.nickName}" style="text-align: center;"></td>
                     <td th:text="${List.likeCnt}" style="text-align: center;"></td>
