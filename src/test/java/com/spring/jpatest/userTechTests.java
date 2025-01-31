@@ -12,10 +12,12 @@ import com.spring.jpatest.dto.login.loginResponseDTO;
 import com.spring.jpatest.dto.user.userDTO;
 import com.spring.jpatest.repository.loginRepository;
 import com.spring.jpatest.repository.userRepository;
+
 import com.spring.jpatest.service.userService;
 
 @SpringBootTest
-public class JpatestApplicationTests {
+@DisplayName("로그인 및 유저생성 테스트 클래스")
+public class userTechTests {
 	
 	userService service;
 	userRepository repository;
@@ -25,6 +27,8 @@ public class JpatestApplicationTests {
 
 	@Autowired
 	loginRepository loginRepository;
+
+
 
 	@BeforeEach
     public void beforeEach() {
@@ -75,4 +79,5 @@ public class JpatestApplicationTests {
 		//userDTOTest userdto = new userDTOTest("","","");
 
 	}
+
 }
