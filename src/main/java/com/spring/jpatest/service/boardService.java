@@ -4,9 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
+
 import com.spring.jpatest.repository.boardRepository;
+
+import jakarta.persistence.NoResultException;
 
 @Service
 public class boardService {
@@ -25,6 +29,20 @@ public class boardService {
     public List<boardListDTO> getBoardList(){
         List<boardListDTO> resultList = boardRepository.getBoardList();
         return resultList;
+    }
+
+    /**
+     * 게시판 - 게시글 상세보기, 조회수 1 증가
+     * 
+     * @param boardCd
+     * @return
+     */
+    public boardDetailDTO getBoardDetail(int boardCd){
+
+        boardRepository.boardCntUp(boardCd);
+        boardDetailDTO result = boardRepository.getBoardDetail(boardCd);
+
+        return result;
     }
 
     /**
