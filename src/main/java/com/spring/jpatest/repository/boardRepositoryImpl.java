@@ -9,6 +9,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.spring.jpatest.domain.Board;
 import com.spring.jpatest.domain.User;
+import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
 
@@ -50,6 +51,47 @@ public class boardRepositoryImpl implements boardRepository{
     }
 
     @Override
+    public boardDetailDTO getBoardDetail(int boardCd) {
+
+        boardDetailDTO result = queryFactory
+                                .select(Projections.constructor(boardDetailDTO.class, 
+                                    user.nickName
+                                    , board.boardTitle
+                                    , board.boardSubject
+                                    , board.viewCnt
+                                    , board.likeCnt
+                                    , board.instDate
+                                ))
+                                .from(board)
+                                .where(board.seq.eq(boardCd))
+                                .join(board.user, user)
+                                .fetchOne();
+
+        return result;
+    }
+
+    @Override
+    @Transactional
+    public void boardCntUp(int boardCd) {
+        
+        try{
+            Board detail = queryFactory.selectFrom(board)
+                                        .where(board.seq.eq(boardCd))
+                                        .fetchOne();
+            
+            // 동시성 문제 고민
+            detail.setViewCnt(detail.getViewCnt() + 1);
+
+        } catch (NullPointerException e) {
+            //e.printStackTrace();
+            throw new NullPointerException();
+            //em.getTransaction().rollback(); // 롤백
+        } 
+
+        em.close(); // 사용한 entityManager 닫기
+    }
+
+    @Override
     @Transactional
     public void boardSave(boardSaveDTO boardSavedto) {
 
@@ -57,7 +99,7 @@ public class boardRepositoryImpl implements boardRepository{
             User userOne = queryFactory.selectFrom(user)
                         .where(user.useruuid.eq(boardSavedto.getUseruuid()))
                         .fetchOne();
-        
+
             Board board = Board.builder()
                             .user(userOne)
                             .boardTitle(boardSavedto.getBoardTitle())
@@ -69,11 +111,10 @@ public class boardRepositoryImpl implements boardRepository{
 
         } catch (Exception e) {
             e.printStackTrace();
-            em.getTransaction().rollback(); // 롤백
-        } finally {
-            em.close(); // 사용한 entityManager 닫기
-        }
-
+            //em.getTransaction().rollback(); // 롤백
+        } 
+        
+        em.close(); // 사용한 entityManager 닫기
     }
 
     @Override
