@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
 import com.spring.jpatest.service.boardService;
@@ -14,8 +15,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class boardController {
@@ -44,6 +47,24 @@ public class boardController {
     }
 
     /**
+     * board - 메인 게시글 상세보기, 조회수 1 증가
+     * 
+     * @param mav
+     * @param boardCd
+     * @return
+     */
+    @RequestMapping(value="/board/detail", method=RequestMethod.GET)
+    public ModelAndView boardDetailPage(ModelAndView mav, @RequestParam int boardCd) {
+
+        boardDetailDTO boardDetail = boardservice.getBoardDetail(boardCd);
+        
+        mav.addObject("boardDetail", boardDetail);
+        mav.setViewName("board/boardDetailPage");
+
+        return mav;
+    }
+
+    /**
      * board - 게시글 입력 페이지 로딩
      * 
      * @param mav
@@ -58,6 +79,13 @@ public class boardController {
         return mav;
     }
 
+    /**
+     * board - 게시글 내용 등록
+     * 
+     * @param boardSavedto
+     * @param request
+     * @return
+     */
     @RequestMapping(value="/board/save", method=RequestMethod.POST)
     public String boardSave(@ModelAttribute("boarddto") boardSaveDTO boardSavedto, HttpServletRequest request) {
 
