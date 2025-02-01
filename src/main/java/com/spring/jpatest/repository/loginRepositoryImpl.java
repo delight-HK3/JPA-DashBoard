@@ -30,9 +30,7 @@ public class loginRepositoryImpl implements loginRepository{
                                         , user.password
                                     ))
                                     .from(user)
-                                    .where(
-                                        user.userId.eq(logindto.getUserId())
-                                    )
+                                    .where(user.userId.eq(logindto.getUserId()))
                                     .fetchOne();
                                     
         return result;
