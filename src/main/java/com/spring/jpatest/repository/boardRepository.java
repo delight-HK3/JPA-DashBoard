@@ -1,7 +1,7 @@
 package com.spring.jpatest.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.spring.jpatest.dto.board.boardDetailDTO;
@@ -11,7 +11,7 @@ import com.spring.jpatest.dto.board.boardSaveDTO;
 @Repository
 public interface boardRepository{
 
-    public List<boardListDTO> getBoardList(); // 리스트 조회
+    public Page<boardListDTO> getBoardList(Pageable pageable); // 리스트 조회
     
     public boardDetailDTO getBoardDetail(int boardCd); // 게시글 상세정보 호출
 
