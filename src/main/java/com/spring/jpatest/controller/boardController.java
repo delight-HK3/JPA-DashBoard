@@ -1,8 +1,10 @@
 package com.spring.jpatest.controller;
 
-import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,7 +17,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,11 +36,12 @@ public class boardController {
      * @param mav
      * @return
      */
-    @RequestMapping(value = "/", method=RequestMethod.GET)
-    public ModelAndView boardMain(ModelAndView mav) {
+    @RequestMapping(value = "/board/list", method=RequestMethod.GET)
+    public ModelAndView boardMain(ModelAndView mav, @PageableDefault(size = 5,page = 0) Pageable pageable) {
+        
+        Page<boardListDTO> boardList = boardservice.getBoardList(pageable);
 
-        List<boardListDTO> boardList = boardservice.getBoardList();
-
+        // List객체에서 Page객체로 변경, 거기에 따른 view에서 페이징 UI처리 필요
         mav.addObject("boardList", boardList);
         mav.setViewName("board/boardListPage");
 
