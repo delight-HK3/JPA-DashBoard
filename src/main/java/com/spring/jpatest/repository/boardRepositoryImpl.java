@@ -2,10 +2,14 @@ package com.spring.jpatest.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.spring.jpatest.domain.Board;
 import com.spring.jpatest.domain.User;
@@ -33,7 +37,7 @@ public class boardRepositoryImpl implements boardRepository{
     }
 
     @Override
-    public List<boardListDTO> getBoardList() {
+    public Page<boardListDTO> getBoardList(Pageable pageable) {
         List<boardListDTO> result = queryFactory
                                     .select(Projections.constructor(boardListDTO.class,
                                         board.seq
@@ -45,9 +49,16 @@ public class boardRepositoryImpl implements boardRepository{
                                     ))
                                     .from(board)
                                     .join(board.user, user)
+                                    .offset(pageable.getOffset())
+                                    .limit(pageable.getPageSize())
                                     .fetch();
         
-        return result;
+        JPQLQuery<Board> count = queryFactory.selectFrom(board);
+
+        // getPage(결과목록, 페이지네이션 설정, 조건에 맞는 데이터 총 개수)
+        // 성능 최적화를 위해 PageImpl대신 PageableExecutionUtils사용
+        // (PageImpl에서 DB 3번 호출할 때 PageableExecutionUtils는 2번 호출)
+        return PageableExecutionUtils.getPage(result, pageable, () -> count.fetchCount());
     }
 
     @Override
@@ -109,7 +120,8 @@ public class boardRepositoryImpl implements boardRepository{
 
             em.persist(board);
 
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
+            // 유저가 없는 경우 (설마 일어날까 싶지만)
             e.printStackTrace();
             //em.getTransaction().rollback(); // 롤백
         } 
