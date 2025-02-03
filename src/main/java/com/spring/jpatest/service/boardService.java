@@ -2,6 +2,8 @@ package com.spring.jpatest.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.spring.jpatest.dto.board.boardDetailDTO;
@@ -9,8 +11,6 @@ import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
 
 import com.spring.jpatest.repository.boardRepository;
-
-import jakarta.persistence.NoResultException;
 
 @Service
 public class boardService {
@@ -26,9 +26,8 @@ public class boardService {
      * 
      * @return resultList
      */
-    public List<boardListDTO> getBoardList(){
-        List<boardListDTO> resultList = boardRepository.getBoardList();
-        return resultList;
+    public Page<boardListDTO> getBoardList(Pageable pageable){
+        return boardRepository.getBoardList(pageable);
     }
 
     /**
