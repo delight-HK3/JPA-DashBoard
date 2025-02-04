@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LoginSessionCheckFilter implements Filter{
-    private final String[] whitelist = {"/", "/user/*", "/login", "/board/detail", "/js/*","/css/*"};
+    private final String[] whitelist = {"/", "/user/*", "/login", "/board/list", "/board/detail", "/js/*","/css/*"};
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -37,7 +37,7 @@ public class LoginSessionCheckFilter implements Filter{
                     // 로그인이 필요하다는 alert메세지를 만드는 부분
                     response.setContentType("text/html; charset=utf-8");
                     PrintWriter w = response.getWriter();
-                    w.write("<script>alert('로그인이 필요합니다.');location.href='/';</script>");
+                    w.write("<script>alert('로그인이 필요합니다.');location.href='/board/list';</script>");
                     w.flush();
                     w.close();
 
