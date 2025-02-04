@@ -49,6 +49,7 @@ public class boardRepositoryImpl implements boardRepository{
                                     ))
                                     .from(board)
                                     .join(board.user, user)
+                                    .orderBy(board.seq.desc())
                                     .offset(pageable.getOffset())
                                     .limit(pageable.getPageSize())
                                     .fetch();
