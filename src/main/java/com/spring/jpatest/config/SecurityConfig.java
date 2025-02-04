@@ -30,7 +30,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());    
         
-        http.sessionManagement(session -> session.invalidSessionUrl("/") // 세션없는 경우 이동하는 경로
+        http.sessionManagement(session -> session.invalidSessionUrl("/board/list") // 세션없는 경우 이동하는 경로
                                                  .maximumSessions(1) // 여러번 로그인 하는 것을 방지목적으로 세팅
                                                  .maxSessionsPreventsLogin(true)); // 두 번이상 로그인 방지
     
