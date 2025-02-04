@@ -53,7 +53,7 @@ public class exceptionHandler {
         StackTraceElement[] stackTraceElement = e.getStackTrace();
         log.error(message, stackTraceElement[0]);
         
-        String script = "<script>alert('해당 게시글이 존재하지 않습니다.'); location.href='/'</script>";
+        String script = "<script>alert('해당 게시글이 존재하지 않습니다.'); location.href='/board/list'</script>";
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "text/html; charset=UTF-8");
 
