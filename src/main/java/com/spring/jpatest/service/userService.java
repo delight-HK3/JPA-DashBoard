@@ -18,7 +18,11 @@ public class userService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // 사용자 등록
+    /**
+     * 사용자 등록
+     * 
+     * @param userdto
+     */
     public void useradd(userDTO userdto){
         User user = User.builder()
                         .nickName(userdto.getNickName())
