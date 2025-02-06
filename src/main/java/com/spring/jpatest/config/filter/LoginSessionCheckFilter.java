@@ -46,9 +46,7 @@ public class LoginSessionCheckFilter implements Filter{
     		 }
 			 chain.doFilter(request, response); //다음 필터 진행. 없다면 서블릿 띄우기
 		 } catch (Exception e) {
- 			throw e; //예외 로깅 가능 하지만, 톰캣까지 예외를 보내주어야 함
-		 } finally {
-		 	//log.info("인증 체크 필터 종료 {}", requestURI);
+ 			throw e; //예외 로깅 가능 하지만, 톰캣까지 예외를 보내주어야 한다.
 		 }
 
     }
