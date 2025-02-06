@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class boardDetailDTO {
 
+    private final int boardCd;            // 게시글 번호
     private final String nickName;        // 작성자 닉네임임
     private final LocalDate instDate;     // 게시글 등록일
     private final String boardTitle;      // 게시글 제목
@@ -14,8 +15,9 @@ public class boardDetailDTO {
     private final int viewCnt;            // 게시글 조회수
     private final int likeCnt;            // 게시글 좋아요 개수
 
-    public boardDetailDTO(String nickName, String boardTitle, String boardSubject,
+    public boardDetailDTO(int boardCd, String nickName, String boardTitle, String boardSubject,
                         int viewCnt, int likeCnt, LocalDate instDate){
+        this.boardCd = boardCd;
         this.nickName = nickName;
         this.boardTitle = boardTitle;
         this.boardSubject = boardSubject;
