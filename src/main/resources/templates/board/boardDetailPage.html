@@ -41,22 +41,24 @@
                         <input type="text" class="form-control" id="boardTitle" name="boardTitle" th:value="${boardDetail.boardTitle}" readonly>
                         <br>
                         <label for="boardSubject" class="form-label">게시글 내용</label>
-                        <textarea class="form-control" id="boardSubject" name="boardSubject" th:value="${boardDetail.boardSubject}" readonly></textarea>
+                        <textarea class="form-control" id="boardSubject" name="boardSubject" readonly>[[${boardDetail.boardSubject}]]</textarea>
                         <br>
                         <div class="row">
                             <div class="col-sm">
                                 <input style="width: 100%;" class="btn btn-success" value="좋아요"/>
                             </div>
-                            <!--/* session 처리하여 로그인하면 출력 */-->
-                            <th:block th:if="${session.nickName != null || session.nickName == boardDetail.nickName}">
+                            <!--/* 로그인한 계정의 nickName과 동일하면 출력 */-->
+                            <th:block th:if="${session.nickName == boardDetail.nickName}">
                                 <div class="col-sm">
                                     <input style="width: 100%;" type="submit" class="btn btn-primary" value="수정"/>
                                 </div> 
                                 <div class="col-sm">
-                                    <input style="width: 100%;" type="submit" class="btn btn-danger" value="삭제"/>
+                                    <form th:action="@{/board/del(boardCd=${boardDetail.boardCd})}" th:method="DELETE">
+                                        <input style="width: 100%;" type="submit" class="btn btn-danger" value="삭제"/>
+                                    </form>
                                 </div>     
                             </th:block>
-                            <!--/* // session 처리하여 로그인하면 출력 */-->
+                            <!--/* // 로그인한 계정의 nickName과 동일하면 출력 */-->
                         </div>
                     </div>
                 </div>
