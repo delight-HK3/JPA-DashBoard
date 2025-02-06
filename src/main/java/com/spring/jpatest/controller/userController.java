@@ -52,7 +52,7 @@ public class userController {
             return "user/userAddPage";
         } else {
             userService.useradd(userdto);
-            return "redirect:/";
+            return "redirect:/board/list";
         }
     }
 
