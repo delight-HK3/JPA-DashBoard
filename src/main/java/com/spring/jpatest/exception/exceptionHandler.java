@@ -1,5 +1,7 @@
 package com.spring.jpatest.exception;
 
+import javax.naming.NoPermissionException;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +47,6 @@ public class exceptionHandler {
     }
 
     // 게시글이 존재하지 않는 경우
-    // NullPointerException : (Exception 조건 : 해당 게시글이 존재하지 않는 경우)
     @ExceptionHandler({NullPointerException.class})
     public ResponseEntity<String> NoDataExceptionHandler(final RuntimeException e) {
 
@@ -53,7 +54,22 @@ public class exceptionHandler {
         StackTraceElement[] stackTraceElement = e.getStackTrace();
         log.error(message, stackTraceElement[0]);
         
-        String script = "<script>alert('해당 게시글이 존재하지 않습니다.'); location.href='/board/list'</script>";
+        String script = "<script>alert("+exceptionEnum.NO_DATA+"); location.href='/board/list'</script>";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "text/html; charset=UTF-8");
+
+        return new ResponseEntity<>(script, headers, HttpStatus.OK);
+    }
+
+    // 현재 존재하는 세션과 삭제하려고 하는 게시글의 작성자가 다른경우
+    @ExceptionHandler({NoPermissionException.class})
+    public ResponseEntity<String> NoPermissionExceptionHandler(final RuntimeException e) {
+
+        String message = getExceptionMessage(e.getMessage());
+        StackTraceElement[] stackTraceElement = e.getStackTrace();
+        log.error(message, stackTraceElement[0]);
+        
+        String script = "<script>alert("+exceptionEnum.NO_PERMISSION+"); location.href='/board/list'</script>";
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "text/html; charset=UTF-8");
 
