@@ -1,6 +1,7 @@
 package com.spring.jpatest.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +35,7 @@ public class boardService {
      * 게시판 - 게시글 상세보기, 조회수 1 증가
      * 
      * @param boardCd
-     * @return
+     * @return result
      */
     public boardDetailDTO getBoardDetail(int boardCd){
 
@@ -51,5 +52,15 @@ public class boardService {
      */
     public void boardSave(boardSaveDTO boardSavedto){
         boardRepository.boardSave(boardSavedto);
+    }
+    
+    /**
+     * 게시판 - 게시글 삭제
+     * 
+     * @param userid
+     * @param boardCd
+     */
+    public void boardDel(UUID userid, int boardCd){
+        boardRepository.boardDelete(userid, boardCd);
     }
 }
