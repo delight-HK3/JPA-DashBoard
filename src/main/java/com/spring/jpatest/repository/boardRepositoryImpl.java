@@ -1,6 +1,9 @@
 package com.spring.jpatest.repository;
 
 import java.util.List;
+import java.util.UUID;
+
+import javax.naming.NoPermissionException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +19,8 @@ import com.spring.jpatest.domain.User;
 import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
+import com.spring.jpatest.exception.exceptionEnum;
+import com.spring.jpatest.exception.custom.NoPermissionsException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -49,7 +54,7 @@ public class boardRepositoryImpl implements boardRepository{
                                     ))
                                     .from(board)
                                     .join(board.user, user)
-                                    .orderBy(board.seq.desc())
+                                    .orderBy(board.seq.desc()) // 역순 정렬
                                     .offset(pageable.getOffset())
                                     .limit(pageable.getPageSize())
                                     .fetch();
@@ -67,7 +72,8 @@ public class boardRepositoryImpl implements boardRepository{
 
         boardDetailDTO result = queryFactory
                                 .select(Projections.constructor(boardDetailDTO.class, 
-                                    user.nickName
+                                    board.seq
+                                    , user.nickName
                                     , board.boardTitle
                                     , board.boardSubject
                                     , board.viewCnt
@@ -87,6 +93,7 @@ public class boardRepositoryImpl implements boardRepository{
     public void boardCntUp(int boardCd) {
         
         try{
+            // 조건과 일치하는 게시글 검색
             Board detail = queryFactory.selectFrom(board)
                                         .where(board.seq.eq(boardCd))
                                         .fetchOne();
@@ -96,6 +103,7 @@ public class boardRepositoryImpl implements boardRepository{
 
         } catch (NullPointerException e) {
             //e.printStackTrace();
+            em.close();
             throw new NullPointerException();
             //em.getTransaction().rollback(); // 롤백
         } 
@@ -108,6 +116,7 @@ public class boardRepositoryImpl implements boardRepository{
     public void boardSave(boardSaveDTO boardSavedto) {
 
         try{
+            // 조건과 일치하는 유저 검색
             User userOne = queryFactory.selectFrom(user)
                         .where(user.useruuid.eq(boardSavedto.getUseruuid()))
                         .fetchOne();
@@ -122,7 +131,8 @@ public class boardRepositoryImpl implements boardRepository{
             em.persist(board);
 
         } catch (NullPointerException e) {
-            // 유저가 없는 경우 (설마 일어날까 싶지만)
+            //e.printStackTrace();
+            em.close();
             e.printStackTrace();
             //em.getTransaction().rollback(); // 롤백
         } 
@@ -131,11 +141,25 @@ public class boardRepositoryImpl implements boardRepository{
     }
 
     @Override
-    public void boardDelete() {
-        
-        // 특정 ID 게시글 삭제
+    @Transactional
+    public void boardDelete(UUID userid, int boardCd) {
+        try{
+            // 조건과 일치하는 유저 검색
+            Board boardOne = queryFactory.selectFrom(board)
+                            .where(user.useruuid.eq(userid), board.seq.eq(boardCd))
+                            .fetchOne();
 
-        throw new UnsupportedOperationException("Unimplemented method 'boardDelete'");
+            em.remove(boardOne);
+
+        } catch (NullPointerException e) {
+            // 현재 존재하는 세션과 삭제하려고 하는 게시글의 작성자가 다른경우
+            //e.printStackTrace();
+            em.close();
+            throw new NoPermissionsException(exceptionEnum.NO_PERMISSION);
+            //em.getTransaction().rollback(); // 롤백
+        } 
+        
+        em.close(); // 사용한 entityManager 닫기
     }
     
 }
