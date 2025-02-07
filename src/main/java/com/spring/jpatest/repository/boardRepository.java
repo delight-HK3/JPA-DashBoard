@@ -1,5 +1,7 @@
 package com.spring.jpatest.repository;
 
+import java.util.UUID;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -19,5 +21,5 @@ public interface boardRepository{
 
     public void boardSave(boardSaveDTO boardSavedto); // 등록및 저장
 
-    public void boardDelete(); // 게시글 삭제
+    public void boardDelete(UUID userid, int boardCd); // 게시글 삭제
 } 
