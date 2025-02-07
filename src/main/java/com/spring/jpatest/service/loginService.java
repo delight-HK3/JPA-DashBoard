@@ -20,7 +20,12 @@ public class loginService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // 입력조건에 일하는 유저 찾기
+    /**
+     * 로그인 - 입력조건에 일하는 유저 찾기
+     * 
+     * @param logindto
+     * @return loginResponseDTO
+     */
     public loginResponseDTO getUserInfo(loginDTO logindto){
 
         loginResponseDTO result = loginRepository.getUserInfo(logindto);
