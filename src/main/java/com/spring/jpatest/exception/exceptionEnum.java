@@ -15,8 +15,11 @@ public enum exceptionEnum {
     // 아이디 혹은 비밀번호가 일치하지 않은 경우
     NOT_MATCH_INFO(HttpStatus.NOT_FOUND, "아이디 혹은 비밀번호가 올바르지 않습니다."),
 
+    // 유저값이 존재하지 않는 경우
+    NO_USER_DATA(HttpStatus.NOT_FOUND, "유저가 존재하지 않습니다."),
+
     // 게시글이 존재하지 않는 경우
-    NO_DATA(HttpStatus.NOT_FOUND, "해당 게시글이 존재하지 않습니다."),
+    NO_BOARD_DATA(HttpStatus.NOT_FOUND, "해당 게시글이 존재하지 않습니다."),
 
     // 다른 유저가 게시글을 삭제하는 경우
     NO_PERMISSION(HttpStatus.UNAUTHORIZED, "삭제권한이 존재하지 않습니다.");
