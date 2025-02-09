@@ -41,8 +41,11 @@ public class boardController {
         
         Page<boardListDTO> boardList = boardservice.getBoardList(pageable);
 
-        // List객체에서 Page객체로 변경, 거기에 따른 view에서 페이징 UI처리 필요
         mav.addObject("boardList", boardList);
+        mav.addObject("maxPage", 5); // 페이지네이션 하나에 출력시킬 페이지 수
+        mav.addObject("currentPage", pageable.getPageNumber()); // 현재 페이지
+        mav.addObject("totalPages", boardList.getTotalPages()); // 페이지 전체개수
+
         mav.setViewName("board/boardListPage");
 
         return mav;
@@ -94,8 +97,27 @@ public class boardController {
         HttpSession session = request.getSession();
         boardSavedto.setUseruuid((UUID) session.getAttribute("useruuid"));
         
-        boardservice.boardSave(boardSavedto);
+        boardservice.boardSave(boardSavedto); // 게시글 내용 등록
 
-        return "redirect:/";
+        return "redirect:/board/list";
     }
+    
+    /**
+     * board - 게시글 삭제
+     * 
+     * @param boardCd
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/board/del", method=RequestMethod.DELETE)
+    public String boardDel(@RequestParam int boardCd, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        UUID userid = (UUID) session.getAttribute("useruuid");
+        
+        boardservice.boardDel(userid, boardCd); // 선택한 게시글 삭제
+
+        return "redirect:/board/list";
+    }
+    
 }
