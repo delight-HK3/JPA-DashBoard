@@ -10,7 +10,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.spring.jpatest.exception.custom.NoBoardDataException;
 import com.spring.jpatest.exception.custom.NoMatchInfoException;
+import com.spring.jpatest.exception.custom.NoUserDataException;
 
 import jakarta.persistence.NoResultException;
 
@@ -47,14 +49,29 @@ public class exceptionHandler {
     }
 
     // 게시글이 존재하지 않는 경우
-    @ExceptionHandler({NullPointerException.class})
-    public ResponseEntity<String> NoDataExceptionHandler(final RuntimeException e) {
+    @ExceptionHandler({NoBoardDataException.class})
+    public ResponseEntity<String> NoBoardDataExceptionHandler(final RuntimeException e) {
 
         String message = getExceptionMessage(e.getMessage());
         StackTraceElement[] stackTraceElement = e.getStackTrace();
         log.error(message, stackTraceElement[0]);
         
-        String script = "<script>alert("+exceptionEnum.NO_DATA+"); location.href='/board/list'</script>";
+        String script = "<script>alert("+exceptionEnum.NO_BOARD_DATA+"); location.href='/board/list'</script>";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "text/html; charset=UTF-8");
+
+        return new ResponseEntity<>(script, headers, HttpStatus.OK);
+    }
+
+    // 유저정보가 존재하지 않는 경우
+    @ExceptionHandler({NoUserDataException.class})
+    public ResponseEntity<String> NoUserDataExceptionHandler(final RuntimeException e) {
+
+        String message = getExceptionMessage(e.getMessage());
+        StackTraceElement[] stackTraceElement = e.getStackTrace();
+        log.error(message, stackTraceElement[0]);
+        
+        String script = "<script>alert("+exceptionEnum.NO_USER_DATA+"); location.href='/board/list'</script>";
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "text/html; charset=UTF-8");
 
