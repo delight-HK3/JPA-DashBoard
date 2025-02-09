@@ -20,7 +20,9 @@ import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
 import com.spring.jpatest.exception.exceptionEnum;
+import com.spring.jpatest.exception.custom.NoBoardDataException;
 import com.spring.jpatest.exception.custom.NoPermissionsException;
+import com.spring.jpatest.exception.custom.NoUserDataException;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -104,8 +106,9 @@ public class boardRepositoryImpl implements boardRepository{
         } catch (NullPointerException e) {
             //e.printStackTrace();
             em.close();
+            em.getTransaction().rollback(); // 롤백
+
             throw new NullPointerException();
-            //em.getTransaction().rollback(); // 롤백
         } 
 
         em.close(); // 사용한 entityManager 닫기
@@ -116,25 +119,42 @@ public class boardRepositoryImpl implements boardRepository{
     public void boardSave(boardSaveDTO boardSavedto) {
 
         try{
-            // 조건과 일치하는 유저 검색
-            User userOne = queryFactory.selectFrom(user)
-                        .where(user.useruuid.eq(boardSavedto.getUseruuid()))
-                        .fetchOne();
+            if(boardSavedto.getBoardSeq() == 0){
+                // 조건과 일치하는 유저 검색
+                User userOne = queryFactory.selectFrom(user)
+                                        .where(user.useruuid.eq(boardSavedto.getUseruuid()))
+                                        .fetchOne();
 
-            Board board = Board.builder()
-                            .user(userOne)
-                            .boardTitle(boardSavedto.getBoardTitle())
-                            .boardSubject(boardSavedto.getBoardSubject())
-                            .instDate(boardSavedto.getInstDate())
-                            .build();
+                Board board = Board.builder()
+                                .user(userOne)
+                                .boardTitle(boardSavedto.getBoardTitle())
+                                .boardSubject(boardSavedto.getBoardSubject())
+                                .instDate(boardSavedto.getInstDate())
+                                .build();
 
-            em.persist(board);
+                em.persist(board);
+
+            } else {
+                // 조건과 일치하는 게시글 검색
+                Board boardOne = queryFactory.selectFrom(board)
+                                        .where(board.seq.eq(boardSavedto.getBoardSeq()))
+                                        .fetchOne();
+
+                boardOne.updateBoard(boardSavedto.getBoardTitle(), boardSavedto.getBoardSubject());
+
+                em.merge(boardOne);
+            }      
 
         } catch (NullPointerException e) {
             //e.printStackTrace();
             em.close();
-            e.printStackTrace();
-            //em.getTransaction().rollback(); // 롤백
+            em.getTransaction().rollback(); // DB 롤백
+
+            if(boardSavedto.getBoardSeq() == 0){ // 유저정보가 없는 경우
+                throw new NoUserDataException(exceptionEnum.NO_USER_DATA);
+            } else { // 게시글의 정보가 없는 경우
+                throw new NoBoardDataException(exceptionEnum.NO_BOARD_DATA);
+            }
         } 
         
         em.close(); // 사용한 entityManager 닫기
@@ -155,8 +175,9 @@ public class boardRepositoryImpl implements boardRepository{
             // 현재 존재하는 세션과 삭제하려고 하는 게시글의 작성자가 다른경우
             //e.printStackTrace();
             em.close();
+            em.getTransaction().rollback();
+
             throw new NoPermissionsException(exceptionEnum.NO_PERMISSION);
-            //em.getTransaction().rollback(); // 롤백
         } 
         
         em.close(); // 사용한 entityManager 닫기
