@@ -1,9 +1,7 @@
-package com.spring.jpatest.repository;
+package com.spring.jpatest.repository.board;
 
 import java.util.List;
 import java.util.UUID;
-
-import javax.naming.NoPermissionException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
