@@ -9,4 +9,8 @@ public class NoBoardDataException extends RuntimeException{
         super(e.getMessage());
         this.error = e;
     }
+
+    public NoBoardDataException(int boardId){
+
+    }
 }

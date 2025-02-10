@@ -1,5 +1,7 @@
 package com.spring.jpatest.exception.custom;
 
+import java.util.UUID;
+
 import com.spring.jpatest.exception.exceptionEnum;
 
 public class NoUserDataException extends RuntimeException{
@@ -8,5 +10,9 @@ public class NoUserDataException extends RuntimeException{
     public NoUserDataException(exceptionEnum e) {
         super(e.getMessage());
         this.error = e;
+    }
+
+    public NoUserDataException(UUID userId){
+        
     }
 }
