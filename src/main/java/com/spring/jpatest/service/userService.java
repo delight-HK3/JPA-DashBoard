@@ -4,7 +4,8 @@ import org.springframework.stereotype.Service;
 
 import com.spring.jpatest.domain.User;
 import com.spring.jpatest.dto.user.userDTO;
-import com.spring.jpatest.repository.userRepository;
+import com.spring.jpatest.repository.user.userRepository;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
