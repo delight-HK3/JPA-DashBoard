@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.spring.jpatest.domain.Board;
 import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
@@ -23,4 +24,5 @@ public interface boardRepositoryCustom{
 
     public void boardDelete(UUID userid, int boardCd); // 게시글 삭제
 
+    public void boardUpdateLike(Board board, boolean check); // 좋아요 업데이트
 } 
