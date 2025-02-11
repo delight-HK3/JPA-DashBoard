@@ -7,7 +7,7 @@ import com.spring.jpatest.dto.login.loginDTO;
 import com.spring.jpatest.dto.login.loginResponseDTO;
 import com.spring.jpatest.exception.exceptionEnum;
 import com.spring.jpatest.exception.custom.NoMatchInfoException;
-import com.spring.jpatest.repository.loginRepository;
+import com.spring.jpatest.repository.login.loginRepository;
 
 @Service
 public class loginService {
