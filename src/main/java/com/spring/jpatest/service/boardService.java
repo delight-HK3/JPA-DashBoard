@@ -1,25 +1,29 @@
 package com.spring.jpatest.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.spring.jpatest.domain.User;
 import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
-
-import com.spring.jpatest.repository.boardRepository;
+import com.spring.jpatest.repository.board.boardRepositoryCustom;
+import com.spring.jpatest.repository.user.userRepository;
 
 @Service
 public class boardService {
     
-    private final boardRepository boardRepository;
+    private final boardRepositoryCustom boardRepository;
+    private final userRepository userRepository;
 
-    public boardService(boardRepository boardRepository){
+    public boardService(boardRepositoryCustom boardRepository, userRepository userRepository){
         this.boardRepository = boardRepository;
+        this.userRepository = userRepository;
     }
     
     /**
@@ -37,16 +41,18 @@ public class boardService {
      * @param boardCd
      * @return result
      */
-    public boardDetailDTO getBoardDetail(int boardCd){
+    public boardDetailDTO getBoardDetail(int boardCd, String tag){
 
-        boardRepository.boardCntUp(boardCd);
+        if(tag.equals("detail")){
+            boardRepository.boardCntUp(boardCd);
+        }
         boardDetailDTO result = boardRepository.getBoardDetail(boardCd);
 
         return result;
     }
 
     /**
-     * 게시판 - 게시글 입력
+     * 게시판 - 게시글 저장 및 수정
      * 
      * @param boardAdddto
      */
