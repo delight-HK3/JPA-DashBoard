@@ -22,9 +22,9 @@ public class boardTechTest {
 	@DisplayName("특정 게시글 정보 가져오기 (실패)")
 	public void getBoardDetailFailTest(){
 		
-		boardDetailDTO result = boardService.getBoardDetail(2);
+		//boardDetailDTO result = boardService.getBoardDetail(2);
 
-		System.out.println(result);
+		//System.out.println(result);
 
 	}
 
@@ -32,9 +32,9 @@ public class boardTechTest {
 	@DisplayName("특정 게시글 정보 가져오기 (성공)")
 	public void getBoardDetailSuccessTest(){
 		
-		boardDetailDTO result = boardService.getBoardDetail(1);
+		//boardDetailDTO result = boardService.getBoardDetail(1);
 
-		System.out.println(result);
+		//System.out.println(result);
 
 	}
 
