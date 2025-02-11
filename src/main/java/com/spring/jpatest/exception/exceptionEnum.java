@@ -22,7 +22,13 @@ public enum exceptionEnum {
     NO_BOARD_DATA(HttpStatus.NOT_FOUND, "해당 게시글이 존재하지 않습니다."),
 
     // 다른 유저가 게시글을 삭제하는 경우
-    NO_PERMISSION(HttpStatus.UNAUTHORIZED, "삭제권한이 존재하지 않습니다.");
+    NO_PERMISSION(HttpStatus.UNAUTHORIZED, "삭제권한이 존재하지 않습니다."),
+
+    // 이미 좋아요를 클릭한 경우
+    ALREADY_LIKE(HttpStatus.BAD_REQUEST,"이미 좋아요를 눌렀습니다."),
+
+    // 조건에 맞는 좋아요를 찾을 수 없는 경우
+    NO_FIND_LIKE(HttpStatus.NOT_FOUND,"좋아요를 찾을 수 없습니다.");
 
     private final HttpStatus status;
     private final String message;
