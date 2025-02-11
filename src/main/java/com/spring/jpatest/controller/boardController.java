@@ -61,7 +61,7 @@ public class boardController {
     @RequestMapping(value="/board/detail", method=RequestMethod.GET)
     public ModelAndView boardDetailPage(ModelAndView mav, @RequestParam int boardCd) {
 
-        boardDetailDTO boardDetail = boardservice.getBoardDetail(boardCd);
+        boardDetailDTO boardDetail = boardservice.getBoardDetail(boardCd, "detail");
         
         mav.addObject("boardDetail", boardDetail);
         mav.setViewName("board/boardDetailPage");
@@ -85,7 +85,26 @@ public class boardController {
     }
 
     /**
-     * board - 게시글 내용 등록
+     * board - 게시글 수정 페이지 로딩
+     * 
+     * @param mav
+     * @param boardCd
+     * @return
+     */
+    @RequestMapping(value="/board/edit", method=RequestMethod.GET)
+    public ModelAndView boardEditPage(@RequestParam int boardCd, boardSaveDTO boardSavedto, ModelAndView mav, HttpServletRequest request) {
+
+        boardDetailDTO boardDetail = boardservice.getBoardDetail(boardCd, "edit");
+        
+        mav.addObject("boardDetail", boardDetail);
+        mav.addObject("boarddto", boardSavedto);
+        mav.setViewName("board/boardEditPage");
+
+        return mav;
+    }
+
+    /**
+     * board - 게시글 내용 등록 / 수정
      * 
      * @param boardSavedto
      * @param request
