@@ -10,9 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.spring.jpatest.dto.login.loginDTO;
 import com.spring.jpatest.dto.login.loginResponseDTO;
 import com.spring.jpatest.dto.user.userDTO;
-import com.spring.jpatest.repository.loginRepository;
-import com.spring.jpatest.repository.userRepository;
-
+import com.spring.jpatest.repository.login.loginRepository;
+import com.spring.jpatest.repository.user.userRepository;
 import com.spring.jpatest.service.userService;
 
 @SpringBootTest
