@@ -1,4 +1,4 @@
-package com.spring.jpatest.repository;
+package com.spring.jpatest.repository.user;
 
 import java.util.UUID;
 
