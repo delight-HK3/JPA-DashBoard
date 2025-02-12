@@ -1,14 +1,11 @@
 package com.spring.jpatest.service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.spring.jpatest.domain.User;
 import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
@@ -41,14 +38,22 @@ public class boardService {
      * @param boardCd
      * @return result
      */
-    public boardDetailDTO getBoardDetail(int boardCd, String tag){
+    public boardDetailDTO getBoardDetail(int boardCd){
 
-        if(tag.equals("detail")){
-            boardRepository.boardCntUp(boardCd);
-        }
+        boardRepository.boardCntUp(boardCd);
         boardDetailDTO result = boardRepository.getBoardDetail(boardCd);
 
         return result;
+    }
+
+    /**
+     * 게시판 - 게시글 수정정보 조회
+     * 
+     * @param boardCd
+     * @return
+     */
+    public boardDetailDTO getBoardEdit(int boardCd){
+        return boardRepository.getBoardDetail(boardCd);
     }
 
     /**
