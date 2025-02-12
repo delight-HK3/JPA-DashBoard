@@ -4,6 +4,10 @@ import java.time.LocalDate;
 
 import lombok.Getter;
 
+/**
+ * 상세보기 및 수정에 사용되는 DTO
+ * 
+ */
 @Getter
 public class boardDetailDTO {
 
