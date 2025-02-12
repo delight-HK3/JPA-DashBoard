@@ -7,12 +7,12 @@ import lombok.Getter;
 @Getter
 public class likeRequestDTO {
     
-    private final UUID userId;
-    private final int boardId;
+    private final UUID useruuId;
+    private final int boardCd;
 
-    public likeRequestDTO(UUID userId, int boardId) {
-        this.userId = userId;
-        this.boardId = boardId;
+    public likeRequestDTO(UUID useruuId, int boardCd) {
+        this.useruuId = useruuId;
+        this.boardCd = boardCd;
     }
 
 }
