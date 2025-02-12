@@ -1,6 +1,7 @@
 package com.spring.jpatest.service;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.spring.jpatest.domain.Board;
@@ -30,27 +31,45 @@ public class likeService {
     }
 
     /**
+     * 게시글의 좋아요 여부 확인
+     * 
+     * @param boardCd
+     * @param checkId
+     * @return
+     */
+    public boolean likeSearch(int boardCd, UUID checkId){
+
+        User user = userRepository.findById(checkId) // 유저정보 찾기
+                        .orElseThrow(() -> new NoUserDataException(checkId)) ;
+
+        Board board = boardRepository.findById(boardCd) // 게시글 찾기
+                        .orElseThrow(() -> new NoBoardDataException(boardCd));
+
+        return likeRepository.findByUserAndBoard(user, board).isPresent();
+    }
+
+    /**
      * 좋아요 클릭
      * 
      * @param likeRequestdto
      */
     public void likeInsert(likeRequestDTO likeRequestdto){
 
-        User user = userRepository.findById(likeRequestdto.getUserId())
-                        .orElseThrow(() -> new NoUserDataException(likeRequestdto.getUserId())) ;
+        User user = userRepository.findById(likeRequestdto.getUseruuId()) // 유저정보 찾기
+                        .orElseThrow(() -> new NoUserDataException(likeRequestdto.getUseruuId())) ;
 
-        Board board = boardRepository.findById(likeRequestdto.getBoardId())
-                        .orElseThrow(() -> new NoBoardDataException(likeRequestdto.getBoardId()));
+        Board board = boardRepository.findById(likeRequestdto.getBoardCd()) // 게시글 찾기
+                        .orElseThrow(() -> new NoBoardDataException(likeRequestdto.getBoardCd()));
 
         // 이미 좋아요를 클릭한 경우
-        if(likeRepository.findByUserBoard(user, board).isPresent()){
+        if(likeRepository.findByUserAndBoard(user, board).isPresent()){
             throw new AlreadyLikeException(exceptionEnum.ALREADY_LIKE);
         }
         
         Likes likes = new Likes(user, board);
 
         likeRepository.save(likes);
-        boardRepository.updateLikeUpdate(board, true);
+        boardRepository.boardUpdateLike(board, true);
     }
 
     /**
@@ -60,16 +79,16 @@ public class likeService {
      */
     public void likedelete(likeRequestDTO likeRequestdto){
 
-        User user = userRepository.findById(likeRequestdto.getUserId())
-                        .orElseThrow(() -> new NoUserDataException(likeRequestdto.getUserId())) ;
+        User user = userRepository.findById(likeRequestdto.getUseruuId()) // 유저정보 찾기
+                        .orElseThrow(() -> new NoUserDataException(likeRequestdto.getUseruuId())) ;
 
-        Board board = boardRepository.findById(likeRequestdto.getBoardId())
-                        .orElseThrow(() -> new NoBoardDataException(likeRequestdto.getBoardId()));
+        Board board = boardRepository.findById(likeRequestdto.getBoardCd()) // 게시글 찾기
+                        .orElseThrow(() -> new NoBoardDataException(likeRequestdto.getBoardCd()));
         
-        Likes likes = likeRepository.findByUserBoard(user, board)
+        Likes likes = likeRepository.findByUserAndBoard(user, board) // 누른 좋아요 찾기
                         .orElseThrow(() -> new NofindLikeException(exceptionEnum.NO_FIND_LIKE));           
         
         likeRepository.delete(likes);
-        boardRepository.updateLikeUpdate(board, false);
+        boardRepository.boardUpdateLike(board, false);
     }
 }
