@@ -28,9 +28,8 @@ import jakarta.persistence.PersistenceContext;
 import static com.spring.jpatest.domain.QBoard.board;
 import static com.spring.jpatest.domain.QUser.user;
 
-
 @Repository
-public class boardRepositoryImpl implements boardRepository{
+public class boardRepositoryImpl implements boardRepositoryCustom{
     
     private final JPAQueryFactory queryFactory;
 
@@ -87,7 +86,7 @@ public class boardRepositoryImpl implements boardRepository{
 
         return result;
     }
-
+    
     @Override
     @Transactional
     public void boardCntUp(int boardCd) {
@@ -179,6 +178,24 @@ public class boardRepositoryImpl implements boardRepository{
         } 
         
         em.close(); // 사용한 entityManager 닫기
+    }
+
+    @Override
+    @Transactional
+    public void boardUpdateLike(Board boardUpdt, boolean check) {
+        
+        if(check){ // 좋아요 클릭한 경우
+            queryFactory.update(board)
+                        .set(board.likeCnt, board.likeCnt.add(1))
+                        .where(board.eq(boardUpdt))
+                        .execute();
+        } else { // 좋아요 클릭해제한 경우
+            queryFactory.update(board)
+                        .set(board.likeCnt, board.likeCnt.subtract(1))
+                        .where(board.eq(boardUpdt))
+                        .execute();
+        }
+
     }
     
 }
