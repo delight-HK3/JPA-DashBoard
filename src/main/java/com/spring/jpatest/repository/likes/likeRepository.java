@@ -9,9 +9,9 @@ import com.spring.jpatest.domain.Board;
 import com.spring.jpatest.domain.Likes;
 import com.spring.jpatest.domain.User;
 
-
 @Repository
 public interface likeRepository extends JpaRepository<Likes, Long>{
-    Optional<Likes> findByUserBoard(User user, Board board);
+
+    Optional<Likes> findByUserAndBoard(User user, Board board);
     
 } 
