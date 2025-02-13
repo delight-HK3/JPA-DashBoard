@@ -12,6 +12,7 @@ import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
 import com.spring.jpatest.service.boardService;
+import com.spring.jpatest.service.likeService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -25,9 +26,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class boardController {
 
     private final boardService boardservice;
+    private final likeService likeService;
 
-    public boardController(boardService boardservice){
+    public boardController(boardService boardservice, likeService likeService){
         this.boardservice = boardservice;
+        this.likeService = likeService;
     }
 
     /**
@@ -59,10 +62,15 @@ public class boardController {
      * @return
      */
     @RequestMapping(value="/board/detail", method=RequestMethod.GET)
-    public ModelAndView boardDetailPage(ModelAndView mav, @RequestParam int boardCd) {
+    public ModelAndView boardDetailPage(ModelAndView mav, @RequestParam int boardCd, HttpServletRequest request) {
 
-        boardDetailDTO boardDetail = boardservice.getBoardDetail(boardCd, "detail");
-        
+        HttpSession session = request.getSession();
+        UUID checkId = (UUID) session.getAttribute("useruuid");
+
+        boardDetailDTO boardDetail = boardservice.getBoardDetail(boardCd);
+        boolean likeCheck = likeService.likeSearch(boardCd, checkId);
+
+        mav.addObject("likeCheck", likeCheck);
         mav.addObject("boardDetail", boardDetail);
         mav.setViewName("board/boardDetailPage");
 
@@ -92,11 +100,11 @@ public class boardController {
      * @return
      */
     @RequestMapping(value="/board/edit", method=RequestMethod.GET)
-    public ModelAndView boardEditPage(@RequestParam int boardCd, boardSaveDTO boardSavedto, ModelAndView mav, HttpServletRequest request) {
+    public ModelAndView boardEditPage(@RequestParam int boardCd, boardSaveDTO boardSavedto, ModelAndView mav) {
 
-        boardDetailDTO boardDetail = boardservice.getBoardDetail(boardCd, "edit");
+        boardDetailDTO boardEdit = boardservice.getBoardEdit(boardCd);
         
-        mav.addObject("boardDetail", boardDetail);
+        mav.addObject("boardEdit", boardEdit);
         mav.addObject("boarddto", boardSavedto);
         mav.setViewName("board/boardEditPage");
 
