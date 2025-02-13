@@ -98,6 +98,7 @@ public class boardRepositoryImpl implements boardRepositoryCustom{
                                         .fetchOne();
             
             // 동시성 문제 고민
+            // Redis 도입해보기
             detail.setViewCnt(detail.getViewCnt() + 1);
 
         } catch (NullPointerException e) {
