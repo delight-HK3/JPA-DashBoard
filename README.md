@@ -4,7 +4,7 @@
 
 Framework : Spring boot 3.3.6
 Language : Java 17
-Database : MariaDB 10.7 
+Database : MariaDB 10.7, Redis(7.4.2)
 Server : localhost
 Tool : Visual Studio Code
 ```
