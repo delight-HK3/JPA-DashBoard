@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.spring.jpatest.dto.board.boardDetailDTO;
@@ -18,9 +19,13 @@ public class boardService {
     private final boardRepositoryCustom boardRepository;
     private final userRepository userRepository;
 
+    // StringRedisTemplate : Redis와의 상호작용을 단순화하기 위해 제공되는 클래스
+    //private final StringRedisTemplate redisTemplate;
+
     public boardService(boardRepositoryCustom boardRepository, userRepository userRepository){
         this.boardRepository = boardRepository;
         this.userRepository = userRepository;
+        //this.redisTemplate = redisTemplate;
     }
     
     /**
