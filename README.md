@@ -60,7 +60,7 @@ spring.thymeleaf.cache=false
 spring.thymeleaf.check-template-location=true
 ```
 
-### 📔 구현한 기능
+### 📔 구현한 기능들
 - 유저등록 (2025.01.28 완료)
 - 로그인기능 (2025.01.28 완료)
 - 세션 등록 및 구분 (2025.01.28 완료)
@@ -70,11 +70,11 @@ spring.thymeleaf.check-template-location=true
 - 게시글 삭제 (2025.02.06 완료)
 <br>
 
-### 📔 앞으로 구현할 기능
+### 📔 앞으로 구현 및 추가예정 기능들
 - 유저등록시 아이디, 닉네임 중복체크
 - 게시글 수정
 - 게시글 검색기능
-- 게시글 수정일 추가
+- 게시글 수정일 컬럼추가
 - 게시글 좋아요 기능
 
 <br>
