@@ -29,14 +29,14 @@ public class RedisConfig {
 
     // RedisTemplate : Spring data Redis에서 제공하는 Redis를 제어하기위한 클래스
     @Bean
-    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory redisConnectionFactory){
-        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, Integer> redisTemplate(RedisConnectionFactory redisConnectionFactory){
+        RedisTemplate<String, Integer> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory); // 등록한 Redis 팩토리
         redisTemplate.setDefaultSerializer(new StringRedisSerializer()); 
         // StringRedisSerializer : 문자열을 바이트 코드로 변환하는 직렬화 도구
         redisTemplate.setValueSerializer(new GenericToStringSerializer<>(Integer.class));
         // 조회수 및 좋아요의 Key값 타입이 String이기에 타입변환을 위해 추가
-
+        
         return redisTemplate;
     }
 }
