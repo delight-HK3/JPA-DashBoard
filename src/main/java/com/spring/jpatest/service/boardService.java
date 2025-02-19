@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.spring.jpatest.dto.board.boardDetailDTO;
@@ -18,14 +17,12 @@ public class boardService {
     
     private final boardRepositoryCustom boardRepository;
     private final userRepository userRepository;
+    private final viewCountService viewCountService;
 
-    // StringRedisTemplate : Redis와의 상호작용을 단순화하기 위해 제공되는 클래스
-    //private final StringRedisTemplate redisTemplate;
-
-    public boardService(boardRepositoryCustom boardRepository, userRepository userRepository){
+    public boardService(boardRepositoryCustom boardRepository, userRepository userRepository, viewCountService viewCountService){
         this.boardRepository = boardRepository;
         this.userRepository = userRepository;
-        //this.redisTemplate = redisTemplate;
+        this.viewCountService = viewCountService;
     }
     
     /**
@@ -44,9 +41,15 @@ public class boardService {
      * @return result
      */
     public boardDetailDTO getBoardDetail(int boardCd){
+        
+        System.out.println(viewCountService.isViewed(boardCd));
 
-        boardRepository.boardCntUp(boardCd);
+        //boardRepository.boardCntUp(boardCd);
         boardDetailDTO result = boardRepository.getBoardDetail(boardCd);
+
+        if(!viewCountService.isViewed(boardCd)){
+            viewCountService.increaseViewCount(boardCd, result.getViewCnt());    
+        }
 
         return result;
     }
