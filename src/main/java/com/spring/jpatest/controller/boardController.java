@@ -62,15 +62,17 @@ public class boardController {
      * @return
      */
     @RequestMapping(value="/board/detail", method=RequestMethod.GET)
-    public ModelAndView boardDetailPage(ModelAndView mav, @RequestParam int boardCd, HttpServletRequest request) {
+    public ModelAndView boardDetailPage(ModelAndView mav, @RequestParam(value="boardCd") int boardCd, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         UUID checkId = (UUID) session.getAttribute("useruuid");
 
         boardDetailDTO boardDetail = boardservice.getBoardDetail(boardCd);
-        boolean likeCheck = likeService.likeSearch(boardCd, checkId);
-
-        mav.addObject("likeCheck", likeCheck);
+        
+        if(checkId != null){
+            boolean likeCheck = likeService.likeSearch(boardCd, checkId);
+            mav.addObject("likeCheck", likeCheck);
+        }
         mav.addObject("boardDetail", boardDetail);
         mav.setViewName("board/boardDetailPage");
 
