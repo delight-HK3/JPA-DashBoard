@@ -10,7 +10,6 @@ import com.spring.jpatest.domain.Board;
 import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
-
 @Repository
 public interface boardRepositoryCustom{
 
