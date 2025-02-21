@@ -41,16 +41,22 @@ public class boardService {
      * @return result
      */
     public boardDetailDTO getBoardDetail(int boardCd){
+        System.out.println("=========isViewed=========");
+        System.out.println("isViewed : "+viewCountService.isViewed(boardCd));
         
-        System.out.println(viewCountService.isViewed(boardCd));
-
         //boardRepository.boardCntUp(boardCd);
         boardDetailDTO result = boardRepository.getBoardDetail(boardCd);
 
+        // 1명이 조회를 한다면 상관없지만 2명 이상이 조회를 할 경우 생각
+        // 1번 방법 redis 값을 변화 시키는 방법
+        // - 로그인한 유저와 로그인 안한 유저 관계없이 게시글에 접근하면 Redis 조회수 증가
+        // 스케줄링 시간이 되면 조회수중 가장 큰값으로 업데이트
+        // 작업을 마치면 Redis flushall로 캐시 삭제
         if(!viewCountService.isViewed(boardCd)){
             viewCountService.increaseViewCount(boardCd, result.getViewCnt());    
         }
-
+        System.out.println("=========increaseViewCount=========");
+        System.out.println("increaseViewCount : "+viewCountService.getViewCount(boardCd));
         return result;
     }
 
