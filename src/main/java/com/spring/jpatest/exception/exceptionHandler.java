@@ -14,8 +14,6 @@ import com.spring.jpatest.exception.custom.NoBoardDataException;
 import com.spring.jpatest.exception.custom.NoMatchInfoException;
 import com.spring.jpatest.exception.custom.NoUserDataException;
 
-import jakarta.persistence.NoResultException;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
