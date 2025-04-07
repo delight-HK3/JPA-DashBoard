@@ -99,7 +99,7 @@ public class boardRepositoryImpl implements boardRepositoryCustom{
             
             // 동시성 문제 고민
             // Redis 도입해보기
-            detail.setViewCnt(detail.getViewCnt() + 1);
+            detail.plusViewCnt();
 
         } catch (NullPointerException e) {
             //e.printStackTrace();
@@ -181,22 +181,4 @@ public class boardRepositoryImpl implements boardRepositoryCustom{
         em.close(); // 사용한 entityManager 닫기
     }
 
-    @Override
-    @Transactional
-    public void boardUpdateLike(Board boardUpdt, boolean check) {
-        
-        if(check){ // 좋아요 클릭한 경우
-            queryFactory.update(board)
-                        .set(board.likeCnt, board.likeCnt.add(1))
-                        .where(board.eq(boardUpdt))
-                        .execute();
-        } else { // 좋아요 클릭해제한 경우
-            queryFactory.update(board)
-                        .set(board.likeCnt, board.likeCnt.subtract(1))
-                        .where(board.eq(boardUpdt))
-                        .execute();
-        }
-
-    }
-    
 }
