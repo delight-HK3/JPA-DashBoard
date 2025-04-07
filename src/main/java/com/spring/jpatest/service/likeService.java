@@ -65,11 +65,10 @@ public class likeService {
         if(likeRepository.findByUserAndBoard(user, board).isPresent()){
             throw new AlreadyLikeException(exceptionEnum.ALREADY_LIKE);
         }
-        
-        Likes likes = new Likes(user, board);
 
-        likeRepository.save(likes);
-        boardRepository.boardUpdateLike(board, true);
+        board.plusLikecount();
+        likeRepository.save(new Likes(user, board));
+        boardRepository.save(board);
     }
 
     /**
@@ -88,7 +87,8 @@ public class likeService {
         Likes likes = likeRepository.findByUserAndBoard(user, board) // 누른 좋아요 찾기
                         .orElseThrow(() -> new NofindLikeException(exceptionEnum.NO_FIND_LIKE));           
         
+        board.minerLikecount();
         likeRepository.delete(likes);
-        boardRepository.boardUpdateLike(board, false);
+        boardRepository.save(board);
     }
 }
