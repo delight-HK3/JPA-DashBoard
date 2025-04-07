@@ -4,7 +4,7 @@
 
 Framework : Spring boot 3.3.6
 Language : Java 17
-Database : MariaDB 10.7, Redis(7.4.2)
+Database : MariaDB 10.7
 Server : localhost
 Tool : Visual Studio Code
 ```
@@ -81,6 +81,10 @@ spring.thymeleaf.check-template-location=true
 
 ### 📰 개발노트
 ---
+
+#### 동시성 문제 해결방안 고민 (2025.04.07)
+게시글 조회 및 좋아요 기능을 제작함에 있어서 2월 13일에는 Redis를 도입하고자 했고 실제로 Redis를 사용해보았으나 현재로써는 기술적 한계로인해 원래 계획한 낙관적 락 처리 방식으로 변경
+
 #### 동시성 문제 해결방안 고민 (2025.02.13)
 게시글 조회를 구현하고 결과를 보니 동시성 문제가 생길 가능성을 확인, 그래서 문제해결 목적으로 메모리 데이터베이스인 Redis도입 결정, Redis를 통한 게시글 조회수 동시성 문제를 완화한다면
 좋아요 기능에도 도입할 계획이다.
