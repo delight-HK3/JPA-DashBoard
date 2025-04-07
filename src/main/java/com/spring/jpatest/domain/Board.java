@@ -2,7 +2,6 @@ package com.spring.jpatest.domain;
 
 import java.time.LocalDate;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -15,7 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.Version;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AccessLevel;
@@ -47,14 +46,15 @@ public class Board {
 
     @Column(name = "viewCnt")
     @Comment(value = "게시글조회수")
-    @ColumnDefault("'0'")
-    private int viewCnt;
+    private int viewCnt = 0;
 
     @Column(name = "likeCnt")
     @Comment(value = "게시글좋아요 개수")
-    @ColumnDefault("'0'")
-    private int likeCnt;
+    private int likeCnt = 0;
     
+    @Version
+    private Long version; // 낙관적 락
+
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="Asia/Seoul")
     @Column(name = "instDate")
     @Comment(value = "작성일")
@@ -73,7 +73,18 @@ public class Board {
         this.boardSubject = boardSubject;
     }
 
-    public void setViewCnt(int viewCnt){
-        this.viewCnt = viewCnt;
+    public void plusViewCnt(){ // 조회수 1 증가
+        this.viewCnt++;
     }
+
+    public void plusLikecount(){ // 좋아요 1 증가
+        this.likeCnt++;
+    }
+
+    public void minerLikecount(){ // 좋아요 1 제거
+        if(this.likeCnt > 0){
+            this.likeCnt--;
+        }
+    }
+
 }
