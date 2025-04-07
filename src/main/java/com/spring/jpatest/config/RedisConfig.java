@@ -11,7 +11,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
-
+    /*
     @Value("${spring.data.redis.host}")
     private String host;
 
@@ -38,5 +38,5 @@ public class RedisConfig {
         // 조회수 및 좋아요의 Key값 타입이 String이기에 타입변환을 위해 추가
         
         return redisTemplate;
-    }
+    } */
 }
