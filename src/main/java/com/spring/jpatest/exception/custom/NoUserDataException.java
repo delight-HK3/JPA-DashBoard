@@ -4,6 +4,9 @@ import java.util.UUID;
 
 import com.spring.jpatest.exception.exceptionEnum;
 
+import lombok.Getter;
+
+@Getter
 public class NoUserDataException extends RuntimeException{
      private exceptionEnum error;
 
