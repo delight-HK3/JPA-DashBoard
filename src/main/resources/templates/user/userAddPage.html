@@ -27,17 +27,17 @@
                         <form th:action="@{/user/inst}" th:object="${userdto}" method="POST">
                             <label for="userId" class="form-label">아이디</label>
                             <input type="text" class="form-control" th:field="*{userId}" required>
-                            <p th:errors="*{userId}"></p>
+                            <p id="userIdCheck" th:errors="*{userId}"></p>
 
                             <label for="password" class="form-label">비밀번호</label>
                             <input type="password" class="form-control" th:field="*{password}" required>
-                            <p th:errors="*{password}"></p>
+                            <p id="passwordCheck" th:errors="*{password}"></p>
 
                             <label for="nickName" class="form-label">닉네임</label>
                             <input type="text" class="form-control" th:field="*{nickName}" required>
-                            <p th:errors="*{nickName}"></p>
+                            <p id="nickNameCheck" th:errors="*{nickName}"></p>
                             
-                            <br>
+                            <br><br>
                             <input style="width: 100%;" type="submit" class="btn btn-primary" value="회원등록"/>
                         </form>
                     </div>
