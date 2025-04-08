@@ -23,7 +23,6 @@ public class User {
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "useruuid")
-    //@Column(name = "useruuid", columnDefinition = "BINARY(16)",unique = true, nullable = false)
     @Comment(value = "유저 일련번호")
     private UUID useruuid;
 
