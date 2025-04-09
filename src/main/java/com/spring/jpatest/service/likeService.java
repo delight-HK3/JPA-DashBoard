@@ -66,6 +66,7 @@ public class likeService {
             throw new AlreadyLikeException(exceptionEnum.ALREADY_LIKE);
         }
 
+        // 낙관적락 try-catch 추가
         board.plusLikecount();
         likeRepository.save(new Likes(user, board));
         boardRepository.save(board);
@@ -87,6 +88,7 @@ public class likeService {
         Likes likes = likeRepository.findByUserAndBoard(user, board) // 누른 좋아요 찾기
                         .orElseThrow(() -> new NofindLikeException(exceptionEnum.NO_FIND_LIKE));           
         
+        // 낙관적락 try-catch 추가
         board.minerLikecount();
         likeRepository.delete(likes);
         boardRepository.save(board);
