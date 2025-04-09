@@ -4,22 +4,27 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.jpatest.domain.Board;
 import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
-import com.spring.jpatest.repository.board.boardRepositoryCustom;
+import com.spring.jpatest.exception.exceptionEnum;
+import com.spring.jpatest.exception.custom.NoBoardDataException;
+import com.spring.jpatest.repository.board.boardRepository;
 import com.spring.jpatest.repository.user.userRepository;
 
 @Service
 public class boardService {
     
-    private final boardRepositoryCustom boardRepository;
+    private final boardRepository boardRepository;
     private final userRepository userRepository;
     private final viewCountService viewCountService;
 
-    public boardService(boardRepositoryCustom boardRepository, userRepository userRepository, viewCountService viewCountService){
+    public boardService(boardRepository boardRepository, userRepository userRepository, viewCountService viewCountService){
         this.boardRepository = boardRepository;
         this.userRepository = userRepository;
         this.viewCountService = viewCountService;
@@ -40,24 +45,42 @@ public class boardService {
      * @param boardCd
      * @return result
      */
-    public boardDetailDTO getBoardDetail(int boardCd){
-        System.out.println("=========isViewed=========");
-        System.out.println("isViewed : "+viewCountService.isViewed(boardCd));
-        
-        //boardRepository.boardCntUp(boardCd);
-        boardDetailDTO result = boardRepository.getBoardDetail(boardCd);
+    
+    @Transactional
+    public Board getBoardDetail(int boardCd){
 
-        // 1명이 조회를 한다면 상관없지만 2명 이상이 조회를 할 경우 생각
-        // 1번 방법 redis 값을 변화 시키는 방법
-        // - 로그인한 유저와 로그인 안한 유저 관계없이 게시글에 접근하면 Redis 조회수 증가
-        // 스케줄링 시간이 되면 조회수중 가장 큰값으로 업데이트
-        // 작업을 마치면 Redis flushall로 캐시 삭제
-        if(!viewCountService.isViewed(boardCd)){
-            viewCountService.increaseViewCount(boardCd, result.getViewCnt());    
+        Board board = boardRepository.findById(boardCd)
+                .orElseThrow(() -> new NoBoardDataException(exceptionEnum.NO_BOARD_DATA));
+
+        /*
+        board.plusViewCnt();
+        
+        try {
+            boardRepository.save(board);
+        } catch (ObjectOptimisticLockingFailureException e) {
+            System.out.println("낙관적 락 충돌 발생: " + e.getMessage());
+            // 필요에 따라 재시도 로직 또는 예외 처리
+            throw new RuntimeException("동시성 문제로 인해 조회수 업데이트에 실패했습니다. 다시 시도해주세요.", e);
+        } */
+
+        return board;
+    }
+
+    @Transactional
+    public void boardCntUp(int boardCd){
+
+        Board board = boardRepository.findById(boardCd)
+                .orElseThrow(() -> new NoBoardDataException(exceptionEnum.NO_BOARD_DATA));
+
+        board.plusViewCnt();
+        
+        try {
+            boardRepository.save(board);
+        } catch (ObjectOptimisticLockingFailureException e) {
+            System.out.println("낙관적 락 충돌 발생: " + e.getMessage());
+            // 필요에 따라 재시도 로직 또는 예외 처리
+            throw new RuntimeException("동시성 문제로 인해 조회수 업데이트에 실패했습니다. 다시 시도해주세요.", e);
         }
-        System.out.println("=========increaseViewCount=========");
-        System.out.println("increaseViewCount : "+viewCountService.getViewCount(boardCd));
-        return result;
     }
 
     /**
@@ -67,7 +90,11 @@ public class boardService {
      * @return
      */
     public boardDetailDTO getBoardEdit(int boardCd){
-        return boardRepository.getBoardDetail(boardCd);
+
+        boardDetailDTO board = boardRepository.getBoardDetail(boardCd)
+                .orElseThrow(() -> new NoBoardDataException(exceptionEnum.NO_BOARD_DATA));
+
+        return board;
     }
 
     /**
@@ -88,4 +115,5 @@ public class boardService {
     public void boardDel(UUID userid, int boardCd){
         boardRepository.boardDelete(userid, boardCd);
     }
+
 }
