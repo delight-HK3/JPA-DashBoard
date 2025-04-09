@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.jpatest.domain.Board;
 import com.spring.jpatest.dto.board.boardDetailDTO;
 import com.spring.jpatest.dto.board.boardListDTO;
 import com.spring.jpatest.dto.board.boardSaveDTO;
@@ -65,12 +66,12 @@ public class boardController {
     public ModelAndView boardDetailPage(ModelAndView mav, @RequestParam(value="boardCd") int boardCd, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        UUID checkId = (UUID) session.getAttribute("useruuid");
+        UUID userid = (UUID) session.getAttribute("useruuid");
 
-        boardDetailDTO boardDetail = boardservice.getBoardDetail(boardCd);
+        Board boardDetail = boardservice.getBoardDetail(boardCd);
         
-        if(checkId != null){
-            boolean likeCheck = likeService.likeSearch(boardCd, checkId);
+        if(userid != null){
+            boolean likeCheck = likeService.likeSearch(boardCd, userid);
             mav.addObject("likeCheck", likeCheck);
         }
         mav.addObject("boardDetail", boardDetail);
