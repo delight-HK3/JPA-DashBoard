@@ -1,6 +1,7 @@
 package com.spring.jpatest.repository.board;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -67,23 +68,24 @@ public class boardRepositoryImpl implements boardRepositoryCustom{
     }
 
     @Override
-    public boardDetailDTO getBoardDetail(int boardCd) {
+    public Optional<boardDetailDTO> getBoardDetail(int boardCd) {
 
-        boardDetailDTO result = queryFactory
-                                .select(Projections.constructor(boardDetailDTO.class, 
-                                    board.seq
-                                    , user.nickName
-                                    , board.boardTitle
-                                    , board.boardSubject
-                                    , board.viewCnt
-                                    , board.likeCnt
-                                    , board.instDate
-                                ))
-                                .from(board)
-                                .where(board.seq.eq(boardCd))
-                                .join(board.user, user)
-                                .fetchOne();
-
+        Optional<boardDetailDTO> result = 
+                            Optional.ofNullable(queryFactory
+                                    .select(Projections.constructor(boardDetailDTO.class, 
+                                        board.seq
+                                        , user.nickName
+                                        , board.boardTitle
+                                        , board.boardSubject
+                                        , board.viewCnt
+                                        , board.likeCnt
+                                        , board.instDate
+                                    ))
+                                    .from(board)
+                                    .where(board.seq.eq(boardCd))
+                                    .join(board.user, user)
+                                    .fetchOne());
+                                    
         return result;
     }
     
