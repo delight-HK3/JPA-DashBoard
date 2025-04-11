@@ -68,7 +68,7 @@ public class boardController {
         HttpSession session = request.getSession();
         UUID userid = (UUID) session.getAttribute("useruuid");
 
-        Board boardDetail = boardservice.getBoardDetail(boardCd);
+        Board boardDetail = boardservice.getBoardDetail(boardCd, userid);
         
         if(userid != null){
             boolean likeCheck = likeService.likeSearch(boardCd, userid);
