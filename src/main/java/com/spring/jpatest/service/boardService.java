@@ -47,21 +47,21 @@ public class boardService {
      */
     
     @Transactional
-    public Board getBoardDetail(int boardCd){
+    public Board getBoardDetail(int boardCd, UUID userid){
 
         Board board = boardRepository.findById(boardCd)
                 .orElseThrow(() -> new NoBoardDataException(exceptionEnum.NO_BOARD_DATA));
 
-        /*
-        board.plusViewCnt();
-        
         try {
-            boardRepository.save(board);
+            if(!userid.equals(board.getUser().getUseruuid())){
+                board.plusViewCnt();
+                boardRepository.save(board);
+            }
         } catch (ObjectOptimisticLockingFailureException e) {
             System.out.println("낙관적 락 충돌 발생: " + e.getMessage());
             // 필요에 따라 재시도 로직 또는 예외 처리
             throw new RuntimeException("동시성 문제로 인해 조회수 업데이트에 실패했습니다. 다시 시도해주세요.", e);
-        } */
+        } 
 
         return board;
     }
