@@ -1,12 +1,11 @@
 # Spring Data JPA 게시판
 ```
-개발환경
+기술 스택
 
 Framework : Spring boot 3.3.6
 Language : Java 17
 Database : MariaDB 10.7
 ORM : Spring Data JPA, QueryDSL
-Server : localhost
 Tool : Visual Studio Code
 ```
 
