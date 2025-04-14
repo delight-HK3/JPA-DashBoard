@@ -5,13 +5,10 @@
 Framework : Spring boot 3.3.6
 Language : Java 17
 Database : MariaDB 10.7
+ORM : Spring Data JPA, QueryDSL
 Server : localhost
 Tool : Visual Studio Code
 ```
-### JPA-DashBoard 에서 사용한 JPA 기술
-- JPQL (EntityManager)
-- QueryDSL
-- Spring Data JPA (JPARepository)
 
 <br>
 
