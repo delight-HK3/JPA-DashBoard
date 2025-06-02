@@ -66,7 +66,7 @@ public class boardController {
     public ModelAndView boardDetailPage(ModelAndView mav, @RequestParam(value="boardCd") int boardCd, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        UUID userid = (UUID) session.getAttribute("useruuid");
+        Long userid = (Long) session.getAttribute("useruuid");
 
         Board boardDetail = boardservice.getBoardDetail(boardCd, userid);
         
@@ -125,7 +125,7 @@ public class boardController {
     public String boardSave(@ModelAttribute("boarddto") boardSaveDTO boardSavedto, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        boardSavedto.setUseruuid((UUID) session.getAttribute("useruuid"));
+        boardSavedto.setUseruuid((Long) session.getAttribute("useruuid"));
         
         boardservice.boardSave(boardSavedto); // 게시글 내용 등록
 
@@ -143,7 +143,7 @@ public class boardController {
     public String boardDel(@RequestParam int boardCd, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-        UUID userid = (UUID) session.getAttribute("useruuid");
+        Long userid = (Long) session.getAttribute("useruuid");
         
         boardservice.boardDel(userid, boardCd); // 선택한 게시글 삭제
 
