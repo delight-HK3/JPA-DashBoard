@@ -12,49 +12,6 @@ Tool : Visual Studio Code
 <br>
 
 (만약 프로젝트를 실행시키고 싶으면 src/main/resources 위치에 application.properties파일을 생성해주시기 바랍니다.)
-```
-server.port = 8099
-
-# http delete, put 메서드 사용목적으로 생성
-spring.mvc.hiddenmethod.filter.enabled=true
-
-# MariaDB 설정
-spring.h2.console.enabled=true
-spring.h2.console.path=/h2-console 
-
-spring.jpa.hibernate.ddl-auto=none
-spring.jpa.properties.hibernate.use_sql_comments=true
-spring.jpa.properties.hibernate.show_sql=true
-spring.jpa.properties.hibernate.format_sql=true
-
-spring.datasource.driverClassName=org.mariadb.jdbc.Driver
-spring.datasource.url=jdbc:mariadb://127.0.0.1:3306/JPADashBoard
-spring.datasource.username=
-spring.datasource.password=
-
-# Redis 설정
-spring.data.redis.host=localhost
-spring.data.redis.port=6379
-
-# 정적 리소스에 변화가 있을 때 바로 반영한다.
-spring.devtools.livereload.enabled=true
-spring.devtools.restart.enabled=true
-spring.devtools.thymeleaf.cache=false
-
-spring.freemarker.cache=false
-
-# thymeleaf 참조 경로
-spring.thymeleaf.prefix=classpath:/templates/
-spring.thymeleaf.enabled=true
-spring.thymeleaf.suffix=.html
-spring.thymeleaf.encoding=UTF-8
-
-# thymeleaf에 대한 캐시를 남기지 않는다. cache=false 설정(운영시는 true)
-spring.thymeleaf.cache=false
-
-# templates 디렉토리에 파일이 있는지 없는지 체크, 없으면 에러를 발생시킨다.
-spring.thymeleaf.check-template-location=true
-```
 
 ### 📔 구현한 기능들
 - 유저등록 (2025.01.28 완료)
@@ -77,6 +34,13 @@ spring.thymeleaf.check-template-location=true
 <br>
 
 ### 📰 개발노트
+---
+#### Redis, cache 도입 고민 (2025.06.02)
+이것과 별개의 프로젝트를 진행하면서 Redis를 도입해야할거 같은 상황은 여러번 있었던거 같다. 이전에도 여러번 시도를 해봤지만 잘되지 않았다.
+하지만 이번에는 새로운 방법을 찾았다. Redis 뿐만 아니라 cache를 도입하는 방법인데 찾아본 결과 복잡한 작업이 아닌 단순 반복작업이라면 Redis와 cache를 사용하는 방법을
+추천받았고 그래서 시도해볼 생각이다.
+<br><br>
+
 ---
 #### 동시성 문제 해결방안 고민 (2025.04.16)
 4월 7일에 동시성문제를 해결하고자 낙관적 락을 도입했고 테스트결과 성공은 했으나 만약 트래픽이 많아지는 상황이라면 다음과 같이 변경할 거 같다.
