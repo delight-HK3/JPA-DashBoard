@@ -11,7 +11,7 @@ Tool : Visual Studio Code
 
 <br>
 
-(만약 프로젝트를 실행시키고 싶으면 src/main/resources 위치에 application.properties파일을 생성해주시기 바랍니다.)
+(만약 프로젝트를 실행시키고 싶으면 properties.txt의 내용을 src/main/resources 위치에 application.properties파일을 생성하고 copy & paste 해주시기 바랍니다.)
 
 ### 📔 구현한 기능들
 - 유저등록 (2025.01.28 완료)
