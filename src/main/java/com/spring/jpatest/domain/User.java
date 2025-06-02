@@ -1,6 +1,6 @@
 package com.spring.jpatest.domain;
 
-import java.util.UUID;
+import java.io.Serializable;
 
 import org.hibernate.annotations.Comment;
 
@@ -14,17 +14,21 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "useruuid")
+    @Column(name = "id")
     @Comment(value = "유저 일련번호")
-    private UUID useruuid;
+    private Long id;
 
     @Column(name = "nickName", length = 50)
     @Comment(value = "닉네임")
