@@ -122,7 +122,7 @@ public class boardRepositoryImpl implements boardRepositoryCustom{
             if(boardSavedto.getBoardSeq() == 0){
                 // 조건과 일치하는 유저 검색
                 User userOne = queryFactory.selectFrom(user)
-                                        .where(user.useruuid.eq(boardSavedto.getUseruuid()))
+                                        .where(user.id.eq(boardSavedto.getUseruuid()))
                                         .fetchOne();
 
                 Board board = Board.builder()
@@ -162,11 +162,11 @@ public class boardRepositoryImpl implements boardRepositoryCustom{
 
     @Override
     @Transactional
-    public void boardDelete(UUID userid, int boardCd) {
+    public void boardDelete(Long userid, int boardCd) {
         try{
             // 조건과 일치하는 유저 검색
             Board boardOne = queryFactory.selectFrom(board)
-                            .where(user.useruuid.eq(userid), board.seq.eq(boardCd))
+                            .where(user.id.eq(userid), board.seq.eq(boardCd))
                             .fetchOne();
 
             em.remove(boardOne);

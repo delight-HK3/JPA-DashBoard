@@ -21,5 +21,5 @@ public interface boardRepositoryCustom{
 
     public void boardSave(boardSaveDTO boardSavedto); // 등록및 저장
 
-    public void boardDelete(UUID userid, int boardCd); // 게시글 삭제
+    public void boardDelete(Long userid, int boardCd); // 게시글 삭제
 } 

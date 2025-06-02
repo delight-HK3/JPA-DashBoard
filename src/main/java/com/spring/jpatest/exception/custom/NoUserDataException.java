@@ -15,7 +15,7 @@ public class NoUserDataException extends RuntimeException{
         this.error = e;
     }
 
-    public NoUserDataException(UUID userId){
+    public NoUserDataException(Long userId){
         
     }
 }

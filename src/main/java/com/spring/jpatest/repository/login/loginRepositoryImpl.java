@@ -24,7 +24,7 @@ public class loginRepositoryImpl implements loginRepository{
 
         loginResponseDTO result = queryFactory
                                     .select(Projections.constructor(loginResponseDTO.class,
-                                        user.useruuid
+                                        user.id
                                         , user.userId
                                         , user.nickName
                                         , user.password

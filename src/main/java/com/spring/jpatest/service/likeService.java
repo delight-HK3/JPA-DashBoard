@@ -1,7 +1,5 @@
 package com.spring.jpatest.service;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 
 import com.spring.jpatest.domain.Board;
@@ -37,7 +35,7 @@ public class likeService {
      * @param checkId
      * @return
      */
-    public boolean likeSearch(int boardCd, UUID checkId){
+    public boolean likeSearch(int boardCd, Long checkId){
 
         User user = userRepository.findById(checkId) // 유저정보 찾기
                         .orElseThrow(() -> new NoUserDataException(checkId)) ;

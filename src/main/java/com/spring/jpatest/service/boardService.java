@@ -47,13 +47,13 @@ public class boardService {
      */
     
     @Transactional
-    public Board getBoardDetail(int boardCd, UUID userid){
+    public Board getBoardDetail(int boardCd, Long userid){
 
         Board board = boardRepository.findById(boardCd)
                 .orElseThrow(() -> new NoBoardDataException(exceptionEnum.NO_BOARD_DATA));
 
         try {
-            if(!userid.equals(board.getUser().getUseruuid())){
+            if(!userid.equals(board.getUser().getId())){
                 board.plusViewCnt();
                 boardRepository.save(board);
             }
@@ -112,8 +112,8 @@ public class boardService {
      * @param userid
      * @param boardCd
      */
-    public void boardDel(UUID userid, int boardCd){
-        boardRepository.boardDelete(userid, boardCd);
+    public void boardDel(Long id, int boardCd){
+        boardRepository.boardDelete(id, boardCd);
     }
 
 }
